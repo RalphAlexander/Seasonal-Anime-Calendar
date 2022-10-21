@@ -1,0 +1,27 @@
+
+.seasonal-calendar-grid {
+    margin: 1rem;
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 1.5em;
+    
+}
+.seasonal-calendar-card {
+    border: solid 1px;  
+}
+
+.seasonal-calendar-anime-title {
+    text-align: center;
+}
+.seasonal-calendar-anime-img-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.seasonal-calendar-anime-img {
+    max-width: -webkit-fill-available;
+    max-height: 12rem;
+}
+.seasonal-calendar-anime-text {
+    text-align: center;
+}

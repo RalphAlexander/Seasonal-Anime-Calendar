@@ -1,6 +1,13 @@
 *{
   margin:0;
 }
+
+@media screen and (max-width: 600px) {
+  html {
+    width: 600px;
+    overflow: auto;
+  }
+}
 /* .screen{
   width: 100%;
   height:100vh;
@@ -38,13 +45,14 @@
 } */
 
 .frame {
-  grid-template-columns: repeat(4,25%);
+  grid-template-columns: repeat(4,1fr);
   grid-gap: 1rem 0;
 }
 
 .card-container {
   display: grid;
-  grid-template-columns: repeat(4,25%);
+  margin: 0.5rem;
+  grid-template-columns: repeat(4,1fr);
   grid-gap: 0 1rem;
 }
 
