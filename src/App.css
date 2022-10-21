@@ -1,8 +1,7 @@
 *{
   margin:0;
 }
-
-.screen{
+/* .screen{
   width: 100%;
   height:100vh;
   display: grid;
@@ -36,4 +35,50 @@
 .text {
   text-align: center;
   opacity: 100%;
+} */
+
+.frame {
+  grid-template-columns: repeat(4,25%);
+  grid-gap: 1rem 0;
+}
+
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(4,25%);
+  grid-gap: 0 1rem;
+}
+
+.anime-card{
+  height: 20rem;
+  display: grid;
+  grid-template-rows: 20% 80%;
+  grid-template-areas: 
+  'title title'
+  'img synopsis';
+  align-items: center;
+}
+
+.anime-card-title {
+  font-size: 20px;
+  text-align: center;
+  grid-area: title;
+  max-height: 0px;
+}
+
+.anime-card-img {
+  grid-area: img;
+  width:100px;
+  max-height:10rem
+}
+
+.anime-card-synopsis {
+  grid-area: synopsis;
+  max-height: inherit;
+  text-overflow: clip;
+  /* width: */
+}
+.anime-card-synopsis-wrapper {
+  overflow-y: scroll;
+  max-height: 100px;
+  max-height:10rem
 }

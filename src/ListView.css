@@ -1,0 +1,15 @@
+*{
+    margin:0;
+}
+
+table {
+    /* border:1px solid black; */
+}
+
+.cell {
+    border-collapse: collapse;
+}
+
+.list-view-img{
+    max-height: 6rem;
+}

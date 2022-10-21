@@ -1,12 +1,15 @@
 import GetRandomAnime from './GetRandomAnime';
 import GetTopAnime from './GetTopAnime';
-import './App.css';
+import GetSeasonalList from './GetSeasonalList';
+
+
 
 function App() {
   return (
     <div>
       {/* <GetRandomAnime /> */}
-      <GetTopAnime />
+      {/* <GetTopAnime /> */}
+      <GetSeasonalList />
     </div>
   );
 }

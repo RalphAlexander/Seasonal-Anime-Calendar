@@ -4,20 +4,21 @@ import Axios from "axios"
 export default function GetTopAnime() {
 
     const [animeList, setAnimeList] = useState(null)
-    const [anime, setAnime] = useState(null)
-    const [anime2, setAnime2] = useState(null)
+    const [randomNumber, setRandomNumber] = useState(0)
+    // const [anime, setAnime] = useState(null)
+    // const [anime2, setAnime2] = useState(null)
     // const [animeIndex, setAnimeIndex] = useState()
     
-    // const getTopAnime = () => {
+    const getTopAnime = () => {
         
-    //     Axios.get(`https://api.jikan.moe/v4/top/anime`)
-    //     .then((res)=> {
-    //         console.log(animeList)
-    //         setAnimeList(res.data)
-    //     })
+        Axios.get(`https://api.jikan.moe/v4/seasons/now`)
+        .then((res)=> {
+            console.log(res.data)
+            setAnimeList(res.data)
+            setRandomNumber(randomValue(0,res.data.pagination.items.count))
+        })
         
-    //     // randomValue(0,animeList.length)
-    // }
+    }
 
     // const getRandomAnime = () =>{
 	// 	Axios.get(`https://api.jikan.moe/v4/random/anime`).then((res) => {
@@ -25,37 +26,41 @@ export default function GetTopAnime() {
 	// 	})
     // }
 
-    function TestAnime() {
-        Axios.get(`https://api.jikan.moe/v4/random/anime`)
-        .then((res) => {
-            if (anime=== null){
-                setAnime(res.data)
-            }
-		})
-    }
-    function TestAnime2() {
-        Axios.get(`https://api.jikan.moe/v4/random/anime`)
-        .then((res) => {
-            if (anime2=== null){
-                setAnime2(res.data)
-            }
-		})
-    }
+    // function TestAnime() {
+    //     Axios.get(`https://api.jikan.moe/v4/random/anime`)
+    //     .then((res) => {
+    //         if (anime=== null){
+    //             setAnime(res.data)
+    //         }
+	// 	})
+    // }
+    // function TestAnime2() {
+    //     Axios.get(`https://api.jikan.moe/v4/random/anime`)
+    //     .then((res) => {
+    //         if (anime2=== null){
+    //             setAnime2(res.data)
+    //         }
+	// 	})
+    // }
 
     // generates a random number from min inclusive to max exclusive
-    // function randomValue(min, max) {
-    //     min = Math.ceil(min)
-    //     max = Math.floor(max)
-    //     return Math.floor(Math.random() * (max - min) + min)
-    //   }
-//
+    function randomValue(min, max) {
+        min = Math.ceil(min)
+        max = Math.floor(max)
+        return Math.floor(Math.random() * (max - min) + min)
+      }
+
   return (
-    <div className='screen'>
-         {/* <button
-            onClick={getRandomAnime}>
+    <div
+    className='frame'
+    //  className='screen'
+     >
+         <button
+            onClick={getTopAnime}>
                 Get Top Anime
-            </button> */}
-            <TestAnime />
+            </button>
+                {animeList !== null && animeList.data[randomNumber].title}
+            {/* <TestAnime />
             <TestAnime2 />
             {anime !== null && <div className='left-side'
             style={{
@@ -75,7 +80,7 @@ export default function GetTopAnime() {
               >
                 <TestAnime2 />
                 {anime2.data.title}  {anime2.data.score}
-            </div>}
+            </div>} */}
     </div>
   )
 }
