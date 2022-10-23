@@ -1,92 +1,261 @@
 *{
   margin:0;
+  color: #7A7A7A;
+  font-family: 'Poppins', sans-serif;
+  scrollbar-color: #8EA6C6;
+  overflow-x: auto;
+  transition: 0.4s;
 }
 
-@media screen and (max-width: 600px) {
+h1 {
+  text-align: center;
+  margin: 1rem;
+}
+
+@media screen and (max-width: 1200px) {
   html {
-    width: 600px;
-    overflow: auto;
+    width: 1200px;
+    overflow-x: auto;
   }
 }
-/* .screen{
-  width: 100%;
+
+@keyframes transform {
+  0% {
+    transform: translateY(0);
+    opacity: 30%
+  }
+  100% {
+    transform: translateY(20px);
+    opacity: 100%
+  }
+}
+::selection{
+  background-color: #4d2e61;
+}
+/* .full-display {
   height:100vh;
-  display: grid;
-  grid-template-areas: 
-  'left right';
-  grid-template-columns: 50% 50%;
-}
+  width: 100%;
+  background-color: #3f51b5;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+} */
+.settings-window-wrapper {
 
-.left-side{
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  grid-area: left;
-  opacity: 40%;
+    position: fixed;
+    /* TODO
+    needs fix 
+    top: 50%;
+    left: 50%;
+    margin-top: -100px; 
+    margin-left: -250px; 
+     */
+  }
+  .exit-button {
+    
+  
+  margin: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  font-size: 10px;
+  width: 20px;
+  height: 20px;
+  position: fixed;
+  z-index: 2;
+  background-color: #111111;
+}
+.settings-window {
+
+  border-radius: 10px;
+  margin: auto;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.right-side{
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  grid-area: right;
-  opacity: 40%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.text {
-  text-align: center;
+  width: 500px;
+  height: 200px;
+  background-color: #464646;
+  position: fixed;
   opacity: 100%;
+}
+
+.settings-icon {
+    height: 36px;
+    width: 36px;
+    /* line-height: 1; */
+}
+
+.settings-icon:hover {
+    transform:rotate(30deg)
+}
+
+.z-index {
+  position: relative; 
+  z-index:-1;
+  opacity: 30%;
+  transition: 0.4s;
+
+}
+/* .seasonal-list-view-container {
+  background-color: #3f51b5;
+  display: inline-block;
 } */
 
-.frame {
-  grid-template-columns: repeat(4,1fr);
-  grid-gap: 1rem 0;
+/* 
+.seasonal-list-view-mal {
+  background-color: #111111;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+}
+.seasonal-list-view-rows {
+  background-color: #111111;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+} */
+
+.seasonal-view-body {
+  display: grid;
+  justify-items: center;
 }
 
 .card-container {
   display: grid;
-  margin: 0.5rem;
-  grid-template-columns: repeat(4,1fr);
-  grid-gap: 0 1rem;
+  grid-template-columns: repeat(3,320px);
+  grid-gap: 25px;
 }
 
 .anime-card{
-  height: 20rem;
+  /* border: 5px solid #8EA6C6; */
+  /* border-radius: 8px; */
+  height: 350px;
+  width: 320px;
   display: grid;
-  grid-template-rows: 20% 80%;
+  /* grid-template-rows: 20% 80%; */
+  grid-template-rows: 22% 12% auto;
+  grid-template-columns: 50% auto;
   grid-template-areas: 
   'title title'
+  'button button'
   'img synopsis';
+  align-items: center;
+  background-color: #111111;
+}
+
+.anime-card-title-wrapper {
+  grid-area: title;
+  height: -webkit-fill-available;
+  border-radius: 8px 8px 0 0;
+  background-color: #232323;
+  display: flex;
   align-items: center;
 }
 
 .anime-card-title {
-  font-size: 20px;
+  font-size: 14px;
   text-align: center;
-  grid-area: title;
-  max-height: 0px;
+  padding: 6px 12px;
+  margin: auto;
+}
+
+.anime-card-button-wrapper {
+  text-align: center;
+  grid-area: button;
+  text-align: center;
+  grid-area: button;
+}
+
+.anime-card-button {
+    border: none;
+    border-radius: 6px;
+    color: #242A31;
+    transition: 0.3s;
+    padding: auto;
+}
+
+.anime-card-button:hover {
+  transition: 0.3s;
+  color: #fff;
+  background-color: #3f51b5;
+}
+
+.anime-card-img-wrapper {
+  max-width: 100%;
+  /* max-height: 100%; */
+  height:100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  background-color: #464646;
 }
 
 .anime-card-img {
   grid-area: img;
-  width:100px;
-  max-height:10rem
+  max-height:100%;
+  width:100%;
+  display: flex;
+  margin: auto;
+  /* max-height:auto */
 }
 
 .anime-card-synopsis {
-  grid-area: synopsis;
-  max-height: inherit;
-  text-overflow: clip;
-  /* width: */
+  height: -webkit-fill-available;
+  padding: 0.6rem 0.8rem;
+  font-size: 10px;
 }
 .anime-card-synopsis-wrapper {
-  overflow-y: scroll;
-  max-height: 100px;
-  max-height:10rem
+  background-color: #232323;
+  grid-area: synopsis;
+  /* margin: 0 0 0 1rem; */
+  overflow-y: clip;
+  overflow-x: hidden;
+  height: 100%;
+  width: 100%;
+  /* border-radius: 6px 0 0 6px; */
 }
+
+.anime-card-synopsis-wrapper:hover {
+  scrollbar-color: #8EA6C6;
+  overflow-y: auto;
+}
+
+.anime-card-synopsis-wrapper::-webkit-scrollbar {
+  background: #343434;
+	width: 9px;
+}
+
+.anime-card-synopsis-wrapper::-webkit-scrollbar-thumb {
+  background: #7A7A7A;
+	width: 9px;
+}
+
+.anime-card-synopsis-wrapper::-webkit-scrollbar-thumb:hover {
+
+}
+/* 
+::-webkit-scrollbar {
+	background: #84B6F7;
+	width: 9px;
+  }
+  
+  
+::-webkit-scrollbar-thumb {
+	background: #3a495e; 
+	border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+	background: #525b69; 
+  } */
+
+  .center{
+    text-align: center;
+  }
+
+  .hidden-dropdown {
+    position:relative;
+    /* display: none;
+    z-index: -2; */
+  }
