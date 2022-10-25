@@ -1,7 +1,7 @@
 
 import Axios from 'axios'
 import { AiFillSetting, AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai'
-import { BiExit } from 'react-icons/bi'
+import { BiExit, BiSortAlt2, BiSortAZ, BiSortZA, BiSortUp, BiSortDown, BiTrash } from 'react-icons/bi'
 import { DateTime } from 'luxon'
 import { useEffect, useState } from 'react'
 
@@ -25,6 +25,7 @@ export default function GetSeasonalList() {
 	const [view, setView] = useState('seasonal view')
 	const [displayType, setDisplayType] = useState('RowDisplay')
 	const [settingsView, setSettingsView] = useState(false)
+	const [deleteView, setDeleteView] = useState(false)
 	const [filterTime, setFilterTime] = useState(24)
 	const [titleIsSortedInAscending,setTitleIsSortedInAscending] = useState('')
 	const [dateIsSortedInAscending, setDateIsSortedInAscending] = useState('')
@@ -45,10 +46,10 @@ export default function GetSeasonalList() {
 		if (localStorageDisplayType) setDisplayType(localStorageDisplayType)
 		
 		const localStorageTitleAscending = JSON.parse(localStorage.getItem(SORTED_ASCENDING_TITLE_KEY))
-		if (localStorageTitleAscending) setTitleIsSortedInAscending(localStorageTitleAscending)
+		setTitleIsSortedInAscending(localStorageTitleAscending)
 
 		const localStorageDateAscending = JSON.parse(localStorage.getItem(SORTED_ASCENDING_DATE_KEY))
-		if (localStorageDateAscending) setDateIsSortedInAscending(localStorageDateAscending)
+		setDateIsSortedInAscending(localStorageDateAscending)
 	},[])
 
 	useEffect(()=>{
@@ -66,14 +67,6 @@ export default function GetSeasonalList() {
 	useEffect(()=>{
 		localStorage.setItem(USER_LIST_KEY, JSON.stringify(userList))
 		console.log(userList)
-		// console.log(localStorage.getItem(USER_LIST_KEY))
-		// setUserList(
-		// 	userList.sort((a,b) => {
-		// 		let res = (getTime(a) > getTime(b) ? 1 : -1)
-		// 		if (res===1 || res===-1) return res
-		// 		else return ((a.title < b.title) ? 1 : -1)
-		// 	})
-		// )
 	},[userList])
 
 	useEffect(()=>{
@@ -286,21 +279,20 @@ export default function GetSeasonalList() {
 		} else startMonth = anime.aired.prop.from.month
 
 		
-		var formattedDate 
+		var formattedDate
+		var date
 		if (anime.broadcast.time){
 			formattedDate = String((anime.aired.prop.from.year) + '-' +
-			startMonth + '-' + startDate + ' ' + anime.broadcast.time
-		)} else {
+			startMonth + '-' + startDate + ' ' + anime.broadcast.time)
+			date = DateTime.fromSQL(formattedDate, { zone: "Asia/Tokyo" })
+			date = date.setZone(timezone)
+		} else {
 			formattedDate = (anime.aired.prop.from.year) + '-' +
 			startMonth + '-' + startDate
-			console.log(formattedDate)
+			date = DateTime.fromSQL(formattedDate, { zone: "Asia/Tokyo" })
+			date = date.setZone(timezone)
 		}
-
 		
-		var date = DateTime.fromSQL(formattedDate, { zone: "Asia/Tokyo" })
-		date = date.setZone(timezone)
-		
-		// if (anime.hasOwnProperty(''))
 
 		return(
 			<>
@@ -372,7 +364,7 @@ export default function GetSeasonalList() {
 
 	// TODO
 	// update the logic a bit: instead of todays date, use an arbitrary date (monday or sunday)
-	function handleDateSort() {
+	function handleDateSortFromNow() {
 		var sortedUserList
 		if (dateIsSortedInAscending){
 			sortedUserList = userList.sort((a,b) =>{
@@ -381,6 +373,26 @@ export default function GetSeasonalList() {
 		} else {
 			sortedUserList = userList.sort((a,b) =>{
 				return ((getTime(a) > getTime(b)) ? 1 : -1)
+			})
+		}
+		setUserList(
+			sortedUserList.map(current=>{
+				return current
+			}))
+		if (dateIsSortedInAscending || !dateIsSortedInAscending) setDateIsSortedInAscending(!dateIsSortedInAscending)
+		else setDateIsSortedInAscending(true)
+		setTitleIsSortedInAscending('')
+	}
+
+	function handleDateSortMondaytoSunday() {
+		var sortedUserList
+		if (dateIsSortedInAscending){
+			sortedUserList = userList.sort((a,b) =>{
+				return ((getSunday(a) < getSunday(b)) ? 1 : -1)
+			})
+		} else {
+			sortedUserList = userList.sort((a,b) =>{
+				return ((getSunday(a) > getSunday(b)) ? 1 : -1)
 			})
 		}
 		setUserList(
@@ -402,25 +414,44 @@ export default function GetSeasonalList() {
 				<h1>
 					My Seasonal List
 				</h1>
-				<div className='button-container'>
-					<button onClick={handleRemoveSelected}> Remove Selected </button>
-					<button onClick={handleRemoveAll}> Remove All </button>
-				</div>
 				<div className='table-container'>
-				
 					<table>
 						<thead> 
 							<tr>
-								<th></th>
+								<th>
+									<BiTrash 
+									className='icon-wrapper trash-icon'
+									onClick={()=> {setDeleteView(!deleteView)}}/>
+								</th>
 								<th> Image </th>
 								<th onClick={handleTitleSort}> 
-									Name
-								{/* have an arrow pointing either up or down depending on 
-								titleIsSortedInAscending */}
+									<div className='icon-wrapper'>
+										Name
+										{titleIsSortedInAscending === '' && <BiSortAlt2
+										onClick={handleTitleSort}
+										className='sort-icon' />}
+										{titleIsSortedInAscending === true && <BiSortAZ
+										onClick={handleTitleSort}
+										className='sort-icon' />}
+										{titleIsSortedInAscending === false && <BiSortZA
+										onClick={handleTitleSort}
+										className='sort-icon' />}
+									</div>
 								</th>
 								<th> Your Progress </th>
-								<th onClick={handleDateSort}>
-									Air Date and Air Time  
+								<th onClick={handleDateSortMondaytoSunday}>
+								<div className='icon-wrapper'>
+										broadcast
+										{dateIsSortedInAscending === '' && <BiSortAlt2
+										onClick={handleTitleSort}
+										className='sort-icon' />}
+										{dateIsSortedInAscending === true && <BiSortDown
+										onClick={handleTitleSort}
+										className='sort-icon' />}
+										{dateIsSortedInAscending === false && <BiSortUp
+										onClick={handleTitleSort}
+										className='sort-icon' />}
+									</div>
 								</th>
 							</tr>
 						</thead>
@@ -499,7 +530,7 @@ export default function GetSeasonalList() {
 	}
 
 	function getTime(anime) {
-		if (!anime.broadcast.time) return 50
+		if (!anime.broadcast.time) return 150
 		
 		var startDate, startMonth
 		if (anime.aired.prop.from.day < 10){
@@ -518,12 +549,40 @@ export default function GetSeasonalList() {
 		var date = DateTime.fromSQL(formattedDate, { zone: "Asia/Tokyo" })
 		date = date.setZone(timezone)
 
-		// change to midnight monday or sunday
+
 		var currentTime = DateTime.now().setZone(timezone)
 		var diffInWeeks = currentTime.diff(date,'weeks')
 		
-		// TODO broken :(
+		date = date.plus({weeks:Math.abs(Math.ceil(diffInWeeks.values.weeks))})
+		return date.diff(currentTime,['hours'])
+		}
+
+	function getSunday(anime) {
 		
+		var startDate, startMonth
+		if (anime.aired.prop.from.day < 10){
+			startDate = '0' + anime.aired.prop.from.day
+		} else startDate = anime.aired.prop.from.day
+		if (anime.aired.prop.from.month < 10){
+			startMonth = '0' + anime.aired.prop.from.month
+		} else startMonth = anime.aired.prop.from.month
+
+		var formattedDate = String(
+			(anime.aired.prop.from.year) + '-' + startMonth + '-' + 
+			startDate + ' ' + anime.broadcast.time
+		) 
+
+		
+		var date = DateTime.fromSQL(formattedDate, { zone: "Asia/Tokyo" })
+		date = date.setZone(timezone)
+
+		var currentTime = DateTime.fromSQL('2022-10-23 11:59')
+		var diffInWeeks = currentTime.diff(date,'weeks')
+		
+		// if (diffInWeeks.values === undefined) {
+		// 	diffInWeeks.values = 0
+		// }
+
 		date = date.plus({weeks:Math.abs(Math.ceil(diffInWeeks.values.weeks))})
 		return date.diff(currentTime,['hours'])
 		}
@@ -545,16 +604,7 @@ export default function GetSeasonalList() {
 		function handleClickDisplay120h(){
 			setFilterTime(120)
 		}
-		
-		// function SortByDate(){
-		// 	setUserList(
-		// 		userList.sort((a,b) => {
-		// 			let res = (getTime(a) > getTime(b) ? 1 : -1)
-		// 			if (res===1 || res===-1) return res
-		// 			else return ((a.title < b.title) ? 1 : -1)
-		// 		})
-		// 	)
-		// }
+
 		
 		
 		return (
@@ -571,7 +621,7 @@ export default function GetSeasonalList() {
 					<button onClick={handleClickDisplay120h}> 120h </button>
 				</div>
 				<div>
-					<button onClick={handleDateSort}> Sort By Time </button>
+					<button onClick={handleDateSortFromNow}> Sort By Time </button>
 				</div>
 				<div>
 					<h3>
@@ -607,7 +657,6 @@ export default function GetSeasonalList() {
 		setUserList([])
 	}
 	function handleRemoveSelected() {
-		console.log(userList)
 		setUserList(userList.filter(anime => !anime.checked))
 	}
 
@@ -615,12 +664,9 @@ export default function GetSeasonalList() {
 		setDisplayType(e.target.value)
 	}
 
-	//TODO
-	//Fix the select stuff
 	function SettingsComponent() {
 		return (
-			
-				<div className='settings-window-wrapper'>
+				<div className='popup-window-wrapper'>
 					<div className='exit-button'onClick={handleClickSettings}>
 						<BiExit className='exit-icon'/>
 					</div>
@@ -628,28 +674,49 @@ export default function GetSeasonalList() {
 						<div className='settings-header'>
 							Select Layout:
 						</div>
-						<div className='options'>
-							<input type="radio" value="RowDisplay" name="style" 
-							onChange={handleChangeSettings}
-							className='radio'
-							checked={displayType === 'RowDisplay'}
-							/> 
-
-							<input type="radio" value="MALStyle" name="style" 
-							onChange={handleChangeSettings}
-							className='radio'
-							checked={displayType === 'MALStyle'}
-							/> 
+						<div className='settings-body-wrapper'>
+							<div className='option1'>
+								<input type="radio" value="RowDisplay" name="style" 
+								onChange={handleChangeSettings}
+								className='radio'
+								checked={displayType === 'RowDisplay'}
+								/> 
+							</div>
+							<div className='layout1'>
+								<img src={process.env.PUBLIC_URL + '/RowDisplay.png'} />
+							</div>
+							<div className='option2'>
+								<input type="radio" value="MALStyle" name="style" 
+								onChange={handleChangeSettings}
+								className='radio'
+								checked={displayType === 'MALStyle'}
+								/> 
+							</div>
+							<div className='layout2'>
+								<img src={process.env.PUBLIC_URL + '/MALDisplay.png'} />
+							</div>
 						</div>
-					<div className='layout1'>
-						<img src={process.env.PUBLIC_URL + '/RowDisplay.png'} />
-					</div>
-					<div className='layout2'>
-						<img src={process.env.PUBLIC_URL + '/MALDisplay.png'} />
-					</div>
 					</div>
 				</div>
-		
+		)
+	}
+
+	function DeleteWindowComponent(){
+		return (
+			<div className='popup-window-wrapper'>
+					<div className='exit-button'onClick={ handleClickDelete}>
+						<BiExit className='exit-icon'/>
+					</div>
+					<div className='delete-window'>
+						<div className='delete-header'>
+							Do you want to remove?
+						</div>
+						<div className='button-container'>
+							<button className='remove-button' onClick={handleRemoveSelected}> Remove Selected </button>
+							<button className='remove-button' onClick={handleRemoveAll}> Remove All </button>
+						</div>
+					</div>
+				</div>
 		)
 	}
 
@@ -657,11 +724,16 @@ export default function GetSeasonalList() {
 		setSettingsView(!settingsView)
 	}
 
+	function handleClickDelete() {
+		setDeleteView(!deleteView)
+	}
+
 	if (seasonalList!==undefined){		
 	return (
 		<>
 		{settingsView && <SettingsComponent />}
-			<div className={settingsView ? 'z-index':''}>
+		{deleteView && <DeleteWindowComponent />}
+			<div className={settingsView||deleteView ? 'z-index':''}>
 				<nav className='nav-header'>
 					<div className='settings-icon-wrapper'>
 					<AiFillSetting 
@@ -675,8 +747,6 @@ export default function GetSeasonalList() {
 					<div className={view === 'seasonal calendar view' ? 'nav-elements-focused' : 'nav-elements'} onClick={handleSeasonalCalendarClick}> My Seasonal Calendar </div> 
 				</nav>						
 				<div>
-					{/* <div className='center' onClick={handleRemoveAll}> Remove All </div>
-					<div className='center' onClick={handleRemoveSelected}> Remove Selected </div> */}
 				</div>
 				{view === 'seasonal view' && <SeasonalView />}
 				{view === 'list view' && <MyListView />}

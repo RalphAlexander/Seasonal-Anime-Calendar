@@ -28,17 +28,21 @@ td:not(:first-child) {
     width: 2%;
   }
   th:nth-child(2) ,td:nth-child(2) {
-    width: 10%;
+    width: 12%;
   }
   th:nth-child(3) ,td:nth-child(3) {
-    width: 45%;
+    width: 42%;
     white-space: normal;
   }
   th:nth-child(4) ,td:nth-child(4) {
-    width: 16%;
+    width: 19%;
   }
   th:nth-child(5) ,td:nth-child(5) {
     width: 27%;
+  }
+
+  thead {
+    font-size: 22px;
   }
   
 .table-container {
@@ -71,9 +75,7 @@ td:not(:first-child) {
     width: 100%;
     object-fit: contain;
     max-height:100%;
-    display: flex;
-  
-  
+    display: flex;  
 }
 
 .progress-div-wrapper {
@@ -129,13 +131,21 @@ td:not(:first-child) {
     filter: brightness(1.7)
   }
 
-  .button-container {
-    display: flex;
-    justify-content: center;
-    gap: 5%;
-  }
-
   .table-time {
     white-space: normal;
   }
   
+.icon-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+  .sort-icon:hover {
+      filter:brightness(2)
+  }
+
+  .trash-icon:hover {
+    filter:brightness(2)
+  }

@@ -3,12 +3,14 @@
   color: #7A7A7A;
   font-family: 'Poppins', sans-serif;
   scrollbar-color: #8EA6C6;
-  /* overflow-x: auto; */
   transition: 0.4s;
+  /* overflow-x: auto; */
+  
 }
 
 body {
   background-color: #111111;
+  overflow-y:auto;
 }
 
 h1 {
@@ -84,19 +86,17 @@ button {
   align-items: center;
 }
 
-.settings-window-wrapper {
+.popup-window-wrapper {
   position: fixed;
   top: 50%;
   left: 50%;
   margin-top: -180px; 
   margin-left: -250px; 
-  
 }
 
 .settings-window {
   border-radius: 10px;
   margin: auto;
-  display: flex;
   align-items: center;
   justify-content: center;
   width: 500px;
@@ -105,13 +105,12 @@ button {
   position: fixed;
   z-index: 1;
   opacity: 100%;
-
-  grid-template-rows: 30% 5% auto;
+  
+  grid-template-rows: 30% auto;
   display: grid;
   grid-template-areas:
-  'header header'
-  'options options'
-  'layout1 layout2';
+  'header'
+  'body'; 
 }
 
 .settings-header {
@@ -122,13 +121,33 @@ button {
   -webkit-user-select: none;
 }
 
-.options {
-  grid-area: options;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap:40%;
-  
+.settings-body-wrapper {
+  grid-area: body;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 10% auto;
+  text-align: center;
+  grid-template-areas: 
+  'opion1 options'
+  'layout1 layout2';
+  justify-items: center;
+}
+
+.option1 {
+  grid-area: auto;
+  width: fit-content;
+}
+
+.option2 {
+  grid-area: auto;
+  width: fit-content;
+}
+
+.option1:hover + .layout1{
+  filter: brightness(1.5);
+}
+.option2:hover + .layout2{
+  filter: brightness(1.5);
 }
 
 .radio {
@@ -170,7 +189,7 @@ button {
   z-index:-1;
   opacity: 30%;
   transition: 0.4s;
-
+  
 }
 
 .nav-header {
@@ -258,14 +277,12 @@ button {
     border-radius: 6px;
     color: #c2c2c2;
     background-color: #464646;
-    transition: 0.3s;
-    padding: auto;
 }
 
 .anime-card-button:hover {
   transition: 0.3s;
-  color: #fff;
-  background-color: #3f51b5;
+  color: #1d1d1d;
+  background-color: #9FB3C8;
 }
 
 .anime-card-img-wrapper {
@@ -309,33 +326,21 @@ button {
 }
 
 .anime-card-synopsis-wrapper::-webkit-scrollbar {
-  background: #343434;
 	width: 9px;
 }
 
-.anime-card-synopsis-wrapper::-webkit-scrollbar-thumb {
-  background: #7A7A7A;
-	width: 9px;
-}
-
-.anime-card-synopsis-wrapper::-webkit-scrollbar-thumb:hover {
-
-}
-/* 
 ::-webkit-scrollbar {
-	background: #84B6F7;
-	width: 9px;
+	background: #343434;
+	width: 15px;
   }
   
-  
 ::-webkit-scrollbar-thumb {
-	background: #3a495e; 
-	border-radius: 10px;
+	background: #7A7A7A; 
   }
 
   ::-webkit-scrollbar-thumb:hover {
-	background: #525b69; 
-  } */
+	background: #b9b9b9; 
+  }
 
   .center{
     text-align: center;
@@ -404,7 +409,7 @@ button {
   }
 
 
-  .anime-card-row-background {
+.anime-card-row-background {
     height: 100%;
     width: 100%;
     background-color: #343434;
@@ -413,4 +418,60 @@ button {
 .separator {
   margin: 2rem 0;
   -webkit-user-select: none;
+}
+
+.delete-window {
+  border-radius: 10px;
+  margin: auto;
+  align-items: center;
+  justify-content: center;
+  width: 500px;
+  height: 360px;
+  background-color: #464646;
+  position: fixed;
+  z-index: 1;
+  opacity: 100%;
+  grid-template-rows: 60% auto;
+  display: grid;
+  grid-template-areas:
+  'header'
+  'body'; 
+}
+
+.delete-header {
+  display: flex;
+  font-size: 43px;
+
+  text-align: center;
+
+  grid-area: header;
+  -webkit-user-select: none;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7%;
+  grid-area: body;
+}
+
+
+.remove-button {
+  height: 100%;
+  text-align: center;  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background-color: #1d1d1d;
+  color: #c2c2c2;
+  border-radius: 10px;
+  width: 190px;
+  height: 40px;
+  font-size: 17px;
+}
+
+.remove-button:hover{
+  background-color: #343434;
 }
