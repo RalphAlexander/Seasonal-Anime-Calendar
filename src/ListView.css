@@ -3,13 +3,139 @@
 }
 
 table {
-    display:table-cell;
+    width: 100%;
+    table-layout: fixed;
+    align-self: center;
+  }
+  tbody {
+    white-space: nowrap;
+  }
+  th,
+  td {
+    padding: 5px 10px;
+    border-top-width: 0;
+    border-left-width: 0;
+    text-align: center;
 }
+td:not(:first-child) {
+    background-color: #232323;
+}
+/* td {
+    background-color: #232323;
+} */
+  
+  th:nth-child(1) ,td:nth-child(1) {
+    width: 2%;
+  }
+  th:nth-child(2) ,td:nth-child(2) {
+    width: 10%;
+  }
+  th:nth-child(3) ,td:nth-child(3) {
+    width: 45%;
+    white-space: normal;
+  }
+  th:nth-child(4) ,td:nth-child(4) {
+    width: 16%;
+  }
+  th:nth-child(5) ,td:nth-child(5) {
+    width: 27%;
+  }
+  
+.table-container {
+    display: flex;
+    justify-content: center;
+    width:1000px;
+    margin: auto;
+    margin-top: 30px;
+    }
 
-.cell {
-    border-collapse: collapse;
+.list-view-img-wrapper {
+    /* height: 100%;
+    max-width: 100%;
+    display: flex; */
+
+    grid-area: img;
+    /* height: 100%; */
+    max-width: 100%;
+    height:150px;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
 }
 
 .list-view-img{
-    max-height: 6rem;
+    /* height: auto;
+    width: 100%; */
+    
+    /* height:100%; */
+    width: 100%;
+    object-fit: contain;
+    max-height:100%;
+    display: flex;
+  
+  
 }
+
+.progress-div-wrapper {
+    display:-webkit-inline-box;
+
+}
+
+.progress-flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.plus-icon {
+    width: 15px;
+    height: 15px;
+  }
+
+.plus-icon-wrapper {
+    background-color: #343434;
+    border-radius: 50%;
+    width:24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .plus-icon-wrapper:hover {
+    filter: brightness(1.7)
+  }
+  
+  .counter {
+    grid-area: counter;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    -webkit-user-select: none;
+  }
+
+.minus-icon-wrapper {
+    background-color: #343434;
+    border-radius: 50%;
+    width:24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .minus-icon-wrapper:hover {
+    filter: brightness(1.7)
+  }
+
+  .button-container {
+    display: flex;
+    justify-content: center;
+    gap: 5%;
+  }
+
+  .table-time {
+    white-space: normal;
+  }
+  
