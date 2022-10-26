@@ -1,6 +1,7 @@
 .seasonal-calendar-grid-container {
     display: grid;
     justify-items: center;
+    margin-bottom: 100px;
 }
 
 .seasonal-calendar-grid {

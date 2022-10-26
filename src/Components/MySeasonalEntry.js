@@ -1,5 +1,13 @@
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai'
 
+// @param handleCheckBox - Function that sets the property checked of the anime object to its opposite boolean value
+// @param handleIncreaseEpisodeCounter - Function that increases the current count of the property episode of the anime object
+// @param handleDecreaseEpisodeCounter - Function that decreases the current count of the property episode of the anime object
+// @param getAnimeAirDate - Function that returns the air date of the anime object
+// @param getAnimeBroadcastTime - Function that returns the date of the anime object in the user's local time
+// @param anime - object to be rendered with its properties
+//
+// Renders each row in the table in the user's seasonal list
 export default function MySeasonalEntry({
 	handleCheckBox,
 	handleIncreaseEpisodeCounter,

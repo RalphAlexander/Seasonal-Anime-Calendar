@@ -2,6 +2,22 @@ import { BiSortAlt2, BiSortAZ, BiSortZA, BiSortUp, BiSortDown, BiTrash } from 'r
 
 import MySeasonalEntry from './MySeasonalEntry'
 
+// @param handleTitleSort - function that sorts and update the state of the userList array in order of the object's 
+// title in ascending or descending order depending on the boolean state titleIsSortedInAscending
+// @param handleCheckBox - Function that sets the property checked of the anime object to its opposite boolean value
+// @param handleDateSortMondaytoSunday - Function that sorts and update the state of the userList 
+// array in order of the object's air time from monday to sunday in ascending or descending order
+// depending on the boolean state dateIsSortedInAscending
+// @param handleOpenDeleteWindow - Function that sets the state of delete view to its opposite
+// @param handleIncreaseEpisodeCounter - Function that increases the current count of the property episode of the anime object
+// @param handleDecreaseEpisodeCounter - Function that decreases the current count of the property episode of the anime object
+// @param getAnimeAirDate - Function that returns the air date of the anime object
+// @param getAnimeBroadcastTime - Function that returns the date of the anime object in the user's local time
+// @param titleIsSortedInAscending - boolean value of if userList is sorted in ascending order by date
+// @param dateIsSortedInAscending - boolean value of if userList is sorted in ascending order by title
+// @param userList - array of anime objects
+//
+// Returns the user's seasonal list
 export default function MySeasonalList({
     handleTitleSort,
     handleCheckBox,
@@ -16,7 +32,7 @@ export default function MySeasonalList({
     userList,
 }) {
     return (
-        <>
+        <div className='bottom-margin'>
             <h1>
                 My Seasonal List
             </h1>
@@ -78,7 +94,7 @@ export default function MySeasonalList({
                     </tbody>
                 </table>
             </div>
-        </>
+        </div>
     )
 
 }

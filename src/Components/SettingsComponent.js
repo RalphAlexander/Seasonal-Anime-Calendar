@@ -1,5 +1,10 @@
 import { BiExit } from 'react-icons/bi'
 
+// @param handleClickSettings - Function that sets the state settingsView to its opposite boolean value
+// @param handleChangeSettings - Function that sets the state of displayType to the value of the event listener
+// @param displayType - string to specify the display type of the seasonal anime list
+//
+// Renders the settings popup window component
 export default function SettingsComponent({
     handleClickSettings,
     handleChangeSettings,

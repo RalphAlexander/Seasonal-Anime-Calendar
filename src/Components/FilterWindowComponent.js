@@ -1,5 +1,9 @@
 import { BiExit } from 'react-icons/bi'
 
+// @param handleFilterSettings - Function that sets the state filterView to its opposite boolean value
+// @param handleDisplayWithinTime - Function that sets the state filterTime to its opposite boolean value
+//
+// Renders the filter popup window component
 export default function FilterWindowComponent({
     handleFilterSettings,
     handleDisplayWithinTime

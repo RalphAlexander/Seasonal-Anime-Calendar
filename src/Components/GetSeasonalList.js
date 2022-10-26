@@ -24,6 +24,7 @@ const DISPLAY_TYPE_KEY = 'displayType'
 
 const timezone = DateTime.local().zoneName
 
+// Renders the body and header of the application
 export default function GetSeasonalList() {
 
 	// React hooks

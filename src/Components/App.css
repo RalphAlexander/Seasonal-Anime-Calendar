@@ -4,6 +4,7 @@
   font-family: 'Poppins', sans-serif;
   scrollbar-color: #8EA6C6;
   transition: 0.4s;
+  position: relative;
 }
 
 body {
@@ -13,7 +14,7 @@ body {
 
 h1 {
   text-align: center;
-  margin: 1rem;
+  margin: 30px;
   font-family: 'Rubik', sans-serif;
   font-size: 40px;
   padding: 15px 0;
@@ -56,6 +57,12 @@ button {
 
 ::selection {
   background-color: #4d2e61;
+}
+
+.page-container {
+  position: relative;
+  min-height: 100vh;
+  padding-bottom: 2.5rem;
 }
 
 .exit-button {
@@ -220,6 +227,7 @@ button {
 .seasonal-view-body {
   display: grid;
   justify-items: center;
+  margin-bottom: 100px;
 }
 
 .card-container {
@@ -494,6 +502,30 @@ button {
 .filter-time-button:hover {
   background-color: #343434;
 }
+
+.footer {
+	padding-top: 1rem;
+	background-color: #1d1d1d;
+	color: #1D3557;
+	text-align: center;
+	font-family: 'Poppins', sans-serif;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+.gh-footer-icon {
+	width: 16px;
+	height: 16px;
+	filter: brightness(50%);
+	margin: 0.6rem;
+}
+
+.gh-footer-icon:hover{
+  filter: brightness(150%);
+  filter: contrast(0.7);
+  transition: 0.4s;
+}
+
 
 /* Copyright (c) 2015 by Hubert & Fischer. All rights reserved.
 

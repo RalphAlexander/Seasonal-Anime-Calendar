@@ -1,6 +1,11 @@
 import { BiExit } from 'react-icons/bi'
 
-
+// @param handleClickDelete - Function that sets the state deleteView to its opposite boolean value
+// @param handleRemoveSelected - Function that updates the userList state by removing
+// object(s) within userList with the boolean checked === true 
+// @param handleRemoveAll - Function that sets the state of userList to an empty array
+//
+// Renders the delete popup window component
 export default function DeleteWindowComponent({
     handleClickDelete,
     handleRemoveSelected,

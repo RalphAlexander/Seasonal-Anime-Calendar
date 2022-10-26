@@ -1,14 +1,12 @@
+import PageComponent from './PageComponent';
 
-import GetSeasonalList from './GetSeasonalList';
-
-
-
+// Renders the entire web app
 function App() {
   return (
     <div>
-      <GetSeasonalList />
+      <PageComponent />
     </div>
-  );
+  )
 }
 
 export default App;
