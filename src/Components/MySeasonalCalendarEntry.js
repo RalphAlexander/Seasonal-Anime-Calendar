@@ -34,9 +34,9 @@ export default function MySeasonalCalendarEntry({
         else {
             if (daysUntilNextEpisode === 0) diffDays = ''
             else if (daysUntilNextEpisode === 1) {
-                diffDays = String(daysUntilNextEpisode) + ' day left and '
+                diffDays = String(daysUntilNextEpisode) + ' day left'
             } else {
-                diffDays = String(daysUntilNextEpisode) + ' days left and '
+                diffDays = String(daysUntilNextEpisode) + ' days left'
             }
         }
 
