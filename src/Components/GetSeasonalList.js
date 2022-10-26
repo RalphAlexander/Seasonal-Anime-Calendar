@@ -1,6 +1,6 @@
-
 import Axios from 'axios'
 import { AiFillSetting } from 'react-icons/ai'
+import { BiTimeFive } from 'react-icons/bi'
 import { DateTime } from 'luxon'
 import { useEffect, useState } from 'react'
 
@@ -13,6 +13,7 @@ import MySeasonalList from './MySeasonalList'
 import SeasonalAnimeViewType from './SeasonalAnimeViewType'
 import MySeasonalCalendar from './MySeasonalCalendar'
 import DeleteWindowComponent from './DeleteWindowComponent'
+import FilterWindowComponent from './FilterWindowComponent'
 
 const USER_LIST_KEY = 'userList'
 const VIEW_KEY = 'view'
@@ -25,17 +26,20 @@ const timezone = DateTime.local().zoneName
 
 export default function GetSeasonalList() {
 
+	// React hooks
 	const [seasonalList, setSeasonalList] = useState()
 	const [userList, setUserList] = useState([])
 	const [view, setView] = useState('seasonal anime view')
 	const [displayType, setDisplayType] = useState('RowDisplay')
 	const [settingsView, setSettingsView] = useState(false)
 	const [deleteView, setDeleteView] = useState(false)
+	const [filterView, setFilterView] = useState(false)
 	const [filterTime, setFilterTime] = useState(24)
 	const [titleIsSortedInAscending, setTitleIsSortedInAscending] = useState('')
 	const [dateIsSortedInAscending, setDateIsSortedInAscending] = useState('')
 
 
+	// Retrieve data from localstorage
 	useEffect(() => {
 		getData(1, true)
 		const localStorageUserList = JSON.parse(localStorage.getItem(USER_LIST_KEY))
@@ -44,11 +48,11 @@ export default function GetSeasonalList() {
 		const localStorageView = JSON.parse(localStorage.getItem(VIEW_KEY))
 		if (localStorageView) setView(localStorageView)
 
-		const localStorageFilterTime = JSON.parse(localStorage.getItem(FILTER_TIME_KEY))
-		if (localStorageFilterTime) setFilterTime(localStorageFilterTime)
-
 		const localStorageDisplayType = JSON.parse(localStorage.getItem(DISPLAY_TYPE_KEY))
 		if (localStorageDisplayType) setDisplayType(localStorageDisplayType)
+
+		const localStorageFilterTime = JSON.parse(localStorage.getItem(FILTER_TIME_KEY))
+		if (localStorageFilterTime) setFilterTime(localStorageFilterTime)
 
 		const localStorageTitleAscending = JSON.parse(localStorage.getItem(SORTED_ASCENDING_TITLE_KEY))
 		setTitleIsSortedInAscending(localStorageTitleAscending)
@@ -57,28 +61,32 @@ export default function GetSeasonalList() {
 		setDateIsSortedInAscending(localStorageDateAscending)
 	}, [])
 
+	// Saves data in localstorage whenever the state is updated
 	useEffect(() => {
-		localStorage.setItem(DISPLAY_TYPE_KEY, JSON.stringify(displayType))
-	}, [displayType])
+		localStorage.setItem(USER_LIST_KEY, JSON.stringify(userList))
+	}, [userList])
 
-	useEffect(() => {
-		localStorage.setItem(FILTER_TIME_KEY, JSON.stringify(filterTime))
-	}, [filterTime])
-
+	// Saves data in localstorage whenever the state is updated
 	useEffect(() => {
 		localStorage.setItem(VIEW_KEY, JSON.stringify(view))
 	}, [view])
 
+	// Saves data in localstorage whenever the state is updated
 	useEffect(() => {
-		localStorage.setItem(USER_LIST_KEY, JSON.stringify(userList))
-		console.log(userList)
-	}, [userList])
+		localStorage.setItem(DISPLAY_TYPE_KEY, JSON.stringify(displayType))
+	}, [displayType])
 
+	// Saves data in localstorage whenever the state is updated
+	useEffect(() => {
+		localStorage.setItem(FILTER_TIME_KEY, JSON.stringify(filterTime))
+	}, [filterTime])
+
+	// Saves data in localstorage whenever the state is updated
 	useEffect(() => {
 		localStorage.setItem(SORTED_ASCENDING_TITLE_KEY, JSON.stringify(titleIsSortedInAscending))
-		console.log(titleIsSortedInAscending)
 	}, [titleIsSortedInAscending])
 
+	// Saves data in localstorage whenever the state is updated
 	useEffect(() => {
 		localStorage.setItem(SORTED_ASCENDING_DATE_KEY, JSON.stringify(dateIsSortedInAscending))
 	}, [dateIsSortedInAscending])
@@ -258,25 +266,17 @@ export default function GetSeasonalList() {
 	}
 
 	// Sorts and update the state of the userList array in order of the object's air time
-	// relative to the current date time in ascending or descending order depending on 
-	// the boolean state dateIsSortedInAscending
+	// relative to the current date and time in ascending order
 	const handleDateSortFromNow = () => {
-		var sortedUserList
-		if (dateIsSortedInAscending) {
-			sortedUserList = userList.sort((a, b) => {
-				return ((getRelativeHoursUntilAiring(a) < getRelativeHoursUntilAiring(b)) ? 1 : -1)
-			})
-		} else {
-			sortedUserList = userList.sort((a, b) => {
-				return ((getRelativeHoursUntilAiring(a) > getRelativeHoursUntilAiring(b)) ? 1 : -1)
-			})
-		}
+		var sortedUserList = userList.sort((a, b) => {
+			return ((getRelativeHoursUntilAiring(a) < getRelativeHoursUntilAiring(b)) ? -1 : 1)
+		})
 		setUserList(
 			sortedUserList.map(current => {
 				return current
-			}))
-		if (dateIsSortedInAscending || !dateIsSortedInAscending) setDateIsSortedInAscending(!dateIsSortedInAscending)
-		else setDateIsSortedInAscending(true)
+			})
+		)
+		setDateIsSortedInAscending('')
 		setTitleIsSortedInAscending('')
 	}
 
@@ -362,16 +362,18 @@ export default function GetSeasonalList() {
 		setView('my seasonal list view')
 	}
 
-	// Sets the state of view to 'my seasonal calendar view'
+	// Sets the state of view to 'my seasonal calendar view' and sorts the userList in ascending
+	// order of time relative to the current date and time
 	const handleSeasonalCalendarClick = () => {
 		setView('my seasonal calendar view')
+		handleDateSortFromNow()
 	}
 
 	// Sets the state of userList to an empty array
 	const handleRemoveAll = () => {
 		setUserList([])
 	}
-	
+
 	// Updates the userList state by removing object(s) within userList with 
 	// the boolean checked === true 
 	const handleRemoveSelected = () => {
@@ -390,6 +392,11 @@ export default function GetSeasonalList() {
 		setSettingsView(!settingsView)
 	}
 
+	// Sets the state filterView to its opposite boolean value
+	const handleFilterSettings = () => {
+		setFilterView(!filterView)
+	}
+
 	// Sets the state deleteView to its opposite boolean value
 	const handleClickDelete = () => {
 		setDeleteView(!deleteView)
@@ -398,27 +405,38 @@ export default function GetSeasonalList() {
 	if (seasonalList !== undefined) {
 		return (
 			<>
-				{settingsView && <SettingsComponent
-					handleClickSettings={handleClickSettings}
-					handleChangeSettings={handleChangeSettings}
-					displayType={displayType} />}
+				{settingsView &&
+					<SettingsComponent
+						handleClickSettings={handleClickSettings}
+						handleChangeSettings={handleChangeSettings}
+						displayType={displayType} />}
 				{deleteView &&
 					<DeleteWindowComponent
 						handleClickDelete={handleClickDelete}
 						handleRemoveSelected={handleRemoveSelected}
 						handleRemoveAll={handleRemoveAll} />}
-				<div className={settingsView || deleteView ? 'z-index' : ''}>
+				{filterView &&
+					<FilterWindowComponent
+						handleFilterSettings={handleFilterSettings}
+						handleDisplayWithinTime={handleDisplayWithinTime}
+					/>}
+				<div className={settingsView || deleteView || filterView ? 'z-index' : ''}>
 					<nav className='nav-header'>
-						<div className='settings-icon-wrapper'>
+						<div className='navabar-icon-wrapper'>
 							<AiFillSetting
 								onClick={handleClickSettings}
-								className='settings-icon' />
+								className='navbar-icon' />
 						</div>
 						<div className={view === 'seasonal anime view' ? 'nav-elements-focused' : 'nav-elements'} onClick={handleSeasonalAnimeViewClick}> Seasonal Anime </div>
 						<div className='separator'> | </div>
 						<div className={view === 'my seasonal list view' ? 'nav-elements-focused' : 'nav-elements'} onClick={handleMyListViewClick}> My Seasonal List </div>
 						<div className='separator'> | </div>
 						<div className={view === 'my seasonal calendar view' ? 'nav-elements-focused' : 'nav-elements'} onClick={handleSeasonalCalendarClick}> My Seasonal Calendar </div>
+						<div className='navabar-icon-wrapper'>
+							<BiTimeFive
+								onClick={handleFilterSettings}
+								className='navbar-icon' />
+						</div>
 					</nav>
 					<div>
 					</div>
@@ -434,7 +452,6 @@ export default function GetSeasonalList() {
 							handleCheckBox={handleCheckBox}
 							handleDateSortMondaytoSunday={handleDateSortMondaytoSunday}
 							handleOpenDeleteWindow={handleOpenDeleteWindow}
-							handleDateSortFromNow={handleDateSortFromNow}
 							handleIncreaseEpisodeCounter={handleIncreaseEpisodeCounter}
 							handleDecreaseEpisodeCounter={handleDecreaseEpisodeCounter}
 							getAnimeAirDate={getAnimeAirDate}
@@ -445,9 +462,8 @@ export default function GetSeasonalList() {
 						/>}
 					{view === 'my seasonal calendar view' &&
 						<MySeasonalCalendar
-							handleDisplayWithinTime={handleDisplayWithinTime}
-							handleDateSortFromNow={handleDateSortFromNow}
 							getDaysAndHoursUntilNextEpisode={getDaysAndHoursUntilNextEpisode}
+							getAnimeBroadcastTime={getAnimeBroadcastTime}
 							filterTime={filterTime}
 							userList={userList}
 						/>}
@@ -456,3 +472,91 @@ export default function GetSeasonalList() {
 		)
 	}
 }
+
+// Copyright 2019 JS Foundation and other contributors
+
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+// The MIT License (MIT)
+
+
+// Copyright (c) 2015-2021 Aniket Suvarna
+
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
+
+// The MIT License (MIT)
+
+// Copyright (c) 2019-2021 The Bootstrap Authors
+
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+// MIT LICENSE
+
+// Copyright (c) 2018-present Ant UED, https://xtech.antfin.com/
+
+// Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to
+// permit persons to whom the Software is furnished to do so, subject to
+// the following conditions:
+
+// The above copyright notice and this permission notice shall be
+// included in all copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+// LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+// OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+// MIT License
+
+// Copyright (c) 2019 Jikan API
+
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.

@@ -1,4 +1,3 @@
-
 // @param anime - objects to be displayed / rendered
 // @param handleAddAnimeToList - function that adds anime to the user's list, does
 // not add duplicates
@@ -19,7 +18,7 @@ export default function SeasonalAnimeMal({
                 <div className='anime-card-button-wrapper'>
                     <button
                         className='anime-card-button'
-                        onClick={() => {handleAddAnimeToList(anime)}}>
+                        onClick={() => { handleAddAnimeToList(anime) }}>
                         add to list
                     </button>
                 </div>

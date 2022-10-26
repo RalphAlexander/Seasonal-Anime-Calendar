@@ -1,16 +1,14 @@
-*{
-  margin:0;
+* {
+  margin: 0;
   color: #7A7A7A;
   font-family: 'Poppins', sans-serif;
   scrollbar-color: #8EA6C6;
   transition: 0.4s;
-  /* overflow-x: auto; */
-  
 }
 
 body {
   background-color: #111111;
-  overflow-y:auto;
+  overflow-y: auto;
 }
 
 h1 {
@@ -19,6 +17,13 @@ h1 {
   font-family: 'Rubik', sans-serif;
   font-size: 40px;
   padding: 15px 0;
+  -webkit-user-select: none;
+}
+
+h2 {
+  font-family: 'Rubik', sans-serif;
+  font-size: 30px;
+  padding: 20px 0;
   -webkit-user-select: none;
 }
 
@@ -42,23 +47,16 @@ button {
     transform: translateY(0);
     opacity: 30%
   }
+
   100% {
     transform: translateY(20px);
     opacity: 100%
   }
 }
 
-::selection{
+::selection {
   background-color: #4d2e61;
 }
-/* .full-display {
-  height:100vh;
-  width: 100%;
-  background-color: #3f51b5;
-  display:flex;
-  align-items: center;
-  justify-content: center;
-} */
 
 .exit-button {
   margin: -13px;
@@ -75,7 +73,7 @@ button {
 }
 
 .exit-button:hover {
-  filter:brightness(1.7)
+  filter: brightness(1.7)
 }
 
 .exit-icon {
@@ -90,8 +88,8 @@ button {
   position: fixed;
   top: 50%;
   left: 50%;
-  margin-top: -180px; 
-  margin-left: -250px; 
+  margin-top: -180px;
+  margin-left: -250px;
 }
 
 .settings-window {
@@ -105,19 +103,19 @@ button {
   position: fixed;
   z-index: 1;
   opacity: 100%;
-  
+
   grid-template-rows: 30% auto;
   display: grid;
   grid-template-areas:
-  'header'
-  'body'; 
+    'header'
+    'body';
 }
 
 .settings-header {
   grid-area: header;
   font-size: 38px;
   text-align: center;
-  color:#1d1d1d;
+  color: #1d1d1d;
   -webkit-user-select: none;
 }
 
@@ -127,9 +125,9 @@ button {
   grid-template-columns: 50% 50%;
   grid-template-rows: 10% auto;
   text-align: center;
-  grid-template-areas: 
-  'opion1 options'
-  'layout1 layout2';
+  grid-template-areas:
+    'opion1 options'
+    'layout1 layout2';
   justify-items: center;
 }
 
@@ -143,10 +141,11 @@ button {
   width: fit-content;
 }
 
-.option1:hover + .layout1{
+.option1:hover+.layout1 {
   filter: brightness(1.5);
 }
-.option2:hover + .layout2{
+
+.option2:hover+.layout2 {
   filter: brightness(1.5);
 }
 
@@ -160,36 +159,37 @@ button {
 }
 
 .layout1:hover {
-  filter:brightness(1.5)
+  filter: brightness(1.5)
 }
+
 .layout2 {
   grid-area: layout2;
 }
+
 .layout2:hover {
-  filter:brightness(1.5)
+  filter: brightness(1.5)
 }
-.settings-icon-wrapper {
-  
+
+.navabar-icon-wrapper {
   display: flex;
   align-items: center;
-  
 }
 
-.settings-icon {
-    height: 22px;
-    width: 22px;
+.navbar-icon {
+  height: 22px;
+  width: 22px;
 }
 
-.settings-icon:hover {
-    filter: brightness(1.7);
+.navbar-icon:hover {
+  filter: brightness(1.7);
 }
 
 .z-index {
-  position: relative; 
-  z-index:-1;
+  position: relative;
+  z-index: -1;
   opacity: 30%;
   transition: 0.4s;
-  
+
 }
 
 .nav-header {
@@ -202,18 +202,18 @@ button {
   padding: 0.5rem;
 }
 
-.nav-elements{
+.nav-elements {
   margin: 2rem 1rem;
   -webkit-user-select: none;
 }
 
-.nav-elements:hover{
-  color:#c2c2c2;
+.nav-elements:hover {
+  color: #c2c2c2;
 }
 
 .nav-elements-focused {
   margin: 2rem 1rem;
-  color:#e7e7e7;
+  color: #e7e7e7;
   -webkit-user-select: none;
 }
 
@@ -224,23 +224,20 @@ button {
 
 .card-container {
   display: grid;
-  grid-template-columns: repeat(3,320px);
+  grid-template-columns: repeat(3, 320px);
   grid-gap: 25px;
 }
 
-.anime-card{
-  /* border: 5px solid #8EA6C6; */
-  /* border-radius: 8px; */
+.anime-card {
   height: 350px;
   width: 320px;
   display: grid;
-  /* grid-template-rows: 20% 80%; */
   grid-template-rows: 22% 12% auto;
   grid-template-columns: 50% auto;
-  grid-template-areas: 
-  'title title'
-  'button button'
-  'img synopsis';
+  grid-template-areas:
+    'title title'
+    'button button'
+    'img synopsis';
   align-items: center;
   background-color: #111111;
 }
@@ -265,7 +262,7 @@ button {
 .anime-card-button-wrapper {
   height: 100%;
   text-align: center;
-  grid-area: button;  
+  grid-area: button;
   background-color: #1d1d1d;
   display: flex;
   align-items: center;
@@ -273,10 +270,10 @@ button {
 }
 
 .anime-card-button {
-    border: none;
-    border-radius: 6px;
-    color: #c2c2c2;
-    background-color: #464646;
+  border: none;
+  border-radius: 6px;
+  color: #c2c2c2;
+  background-color: #464646;
 }
 
 .anime-card-button:hover {
@@ -286,9 +283,8 @@ button {
 }
 
 .anime-card-img-wrapper {
-  /* max-height: 100%; */
   max-width: 100%;
-  height:100%;
+  height: 100%;
   overflow: hidden;
   display: flex;
   justify-content: center;
@@ -297,11 +293,10 @@ button {
 
 .anime-card-img {
   grid-area: img;
-  max-height:100%;
-  width:100%;
+  max-height: 100%;
+  width: 100%;
   display: flex;
   margin: auto;
-  /* max-height:auto */
 }
 
 .anime-card-synopsis {
@@ -309,15 +304,14 @@ button {
   padding: 0.6rem 0.8rem;
   font-size: 10px;
 }
+
 .anime-card-synopsis-wrapper {
   background-color: #232323;
   grid-area: synopsis;
-  /* margin: 0 0 0 1rem; */
   overflow-y: clip;
   overflow-x: auto;
   height: 100%;
   width: 100%;
-  /* border-radius: 6px 0 0 6px; */
 }
 
 .anime-card-synopsis-wrapper:hover {
@@ -326,101 +320,99 @@ button {
 }
 
 .anime-card-synopsis-wrapper::-webkit-scrollbar {
-	width: 9px;
+  width: 9px;
 }
 
 ::-webkit-scrollbar {
-	background: #343434;
-	width: 15px;
-  }
-  
+  background: #343434;
+  width: 15px;
+}
+
 ::-webkit-scrollbar-thumb {
-	background: #7A7A7A; 
-  }
+  background: #7A7A7A;
+}
 
-  ::-webkit-scrollbar-thumb:hover {
-	background: #b9b9b9; 
-  }
+::-webkit-scrollbar-thumb:hover {
+  background: #b9b9b9;
+}
 
-  .center{
-    text-align: center;
-  }
+.center {
+  text-align: center;
+}
 
-  .hidden-dropdown {
-    position:relative;
-    /* display: none;
-    z-index: -2; */
-  }
+.hidden-dropdown {
+  position: relative;
+}
 
-  .anime-card-row {
-    height: 170px;
-    border: #343434 solid 3px;
-    background-color: #232323;
-    display: grid;
-    grid-template-columns: 35% auto;
-    grid-template-rows: 74% auto;
-    grid-template-areas: 
+.anime-card-row {
+  height: 170px;
+  border: #343434 solid 3px;
+  background-color: #232323;
+  display: grid;
+  grid-template-columns: 35% auto;
+  grid-template-rows: 74% auto;
+  grid-template-areas:
     'img title'
     'img button';
-  }
+}
 
-  .anime-card-row:hover {
-    filter: brightness(1.2);
-    filter:contrast(0.8)
-  }
+.anime-card-row:hover {
+  filter: brightness(1.2);
+  filter: contrast(0.8);
+}
 
-  .anime-card-row-img-wrapper {
-    grid-area: img;
-    max-width: 100%;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    
-  }
-  
-  .anime-card-row-img {
-    object-fit: contain;
-    position: absolute;
-    max-height:100%;
-    display: flex;
-    
-  }
+.anime-card-row-img-wrapper {
+  grid-area: img;
+  max-width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 
-  .anime-card-row-title {
-    font-weight: 400;
-    grid-area: title;
-    margin: 10px 10px 3px 10px;
-    text-align: center;
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
+}
 
-  .anime-card-row-button-wrapper {
-    grid-area: button;
-    background-color: #232323;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+.anime-card-row-img {
+  object-fit: contain;
+  position: absolute;
+  max-height: 100%;
+  display: flex;
+
+}
+
+.anime-card-row-title {
+  font-weight: 400;
+  grid-area: title;
+  margin: 10px 10px 3px 10px;
+  text-align: center;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.anime-card-row-button-wrapper {
+  grid-area: button;
+  background-color: #232323;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 
 .anime-card-row-background {
-    height: 100%;
-    width: 100%;
-    background-color: #343434;
-  }
+  height: 100%;
+  width: 100%;
+  background-color: #343434;
+}
 
 .separator {
   margin: 2rem 0;
   -webkit-user-select: none;
 }
 
-.delete-window {
+.popup-window {
   border-radius: 10px;
   margin: auto;
   align-items: center;
@@ -434,16 +426,13 @@ button {
   grid-template-rows: 60% auto;
   display: grid;
   grid-template-areas:
-  'header'
-  'body'; 
+    'header'
+    'body';
 }
 
 .delete-header {
-  display: flex;
   font-size: 43px;
-
   text-align: center;
-
   grid-area: header;
   -webkit-user-select: none;
 }
@@ -456,10 +445,9 @@ button {
   grid-area: body;
 }
 
-
 .remove-button {
   height: 100%;
-  text-align: center;  
+  text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -472,6 +460,130 @@ button {
   font-size: 17px;
 }
 
-.remove-button:hover{
+.remove-button:hover {
   background-color: #343434;
 }
+
+.filter-header {
+  font-size: 36px;
+  text-align: center;
+  grid-area: header;
+  -webkit-user-select: none;
+}
+
+.filter-time-button-container {
+  grid-area: body;
+  display: flex;
+  align-items: top;
+  justify-content: center;
+  gap: 14px;
+}
+
+.filter-time-button {
+  height: 100%;
+  text-align: center;
+  border: none;
+  background-color: #1d1d1d;
+  color: #c2c2c2;
+  border-radius: 15px;
+  width: 60px;
+  height: 40px;
+  font-size: 17px;
+}
+
+.filter-time-button:hover {
+  background-color: #343434;
+}
+
+/* Copyright (c) 2015 by Hubert & Fischer. All rights reserved.
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+This license is copied below, and is also available with a FAQ at:
+http://scripts.sil.org/OFL
+
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+This license is copied below, and is also available with a FAQ at: http://scripts.sil.org/OFL
+
+—————————————————————————————-
+SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007
+—————————————————————————————-
+
+PREAMBLE
+The goals of the Open Font License (OFL) are to stimulate worldwide development of collaborative font projects, to support the font creation efforts of academic and linguistic communities, and to provide a free and open framework in which fonts may be shared and improved in partnership with others.
+
+The OFL allows the licensed fonts to be used, studied, modified and redistributed freely as long as they are not sold by themselves. The fonts, including any derivative works, can be bundled, embedded, redistributed and/or sold with any software provided that any reserved names are not used by derivative works. The fonts and derivatives, however, cannot be released under any other type of license. The requirement for fonts to remain under this license does not apply to any document created using the fonts or their derivatives.
+
+DEFINITIONS
+“Font Software” refers to the set of files released by the Copyright Holder(s) under this license and clearly marked as such. This may include source files, build scripts and documentation.
+
+“Reserved Font Name” refers to any names specified as such after the copyright statement(s).
+
+“Original Version” refers to the collection of Font Software components as distributed by the Copyright Holder(s).
+
+“Modified Version” refers to any derivative made by adding to, deleting, or substituting—in part or in whole—any of the components of the Original Version, by changing formats or by porting the Font Software to a new environment.
+
+“Author” refers to any designer, engineer, programmer, technical writer or other person who contributed to the Font Software.
+
+PERMISSION & CONDITIONS
+Permission is hereby granted, free of charge, to any person obtaining a copy of the Font Software, to use, study, copy, merge, embed, modify, redistribute, and sell modified and unmodified copies of the Font Software, subject to the following conditions:
+
+1) Neither the Font Software nor any of its individual components, in Original or Modified Versions, may be sold by itself.
+
+2) Original or Modified Versions of the Font Software may be bundled, redistributed and/or sold with any software, provided that each copy contains the above copyright notice and this license. These can be included either as stand-alone text files, human-readable headers or in the appropriate machine-readable metadata fields within text or binary files as long as those fields can be easily viewed by the user.
+
+3) No Modified Version of the Font Software may use the Reserved Font Name(s) unless explicit written permission is granted by the corresponding Copyright Holder. This restriction only applies to the primary font name as presented to the users.
+
+4) The name(s) of the Copyright Holder(s) or the Author(s) of the Font Software shall not be used to promote, endorse or advertise any Modified Version, except to acknowledge the contribution(s) of the Copyright Holder(s) and the Author(s) or with their explicit written permission.
+
+5) The Font Software, modified or unmodified, in part or in whole, must be distributed entirely under this license, and must not be distributed under any other license. The requirement for fonts to remain under this license does not apply to any document created using the Font Software.
+
+TERMINATION
+This license becomes null and void if any of the above conditions are not met.
+
+DISCLAIMER
+THE FONT SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT OF COPYRIGHT, PATENT, TRADEMARK, OR OTHER RIGHT. IN NO EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, INCLUDING ANY GENERAL, SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL DAMAGES, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM OTHER DEALINGS IN THE FONT SOFTWARE. */
+
+/* Copyright (c) 2014, Indian Type Foundry (info@indiantypefoundry.com).
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+This license is copied below, and is also available with a FAQ at: http://scripts.sil.org/OFL
+
+—————————————————————————————-
+SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007
+—————————————————————————————-
+
+PREAMBLE
+The goals of the Open Font License (OFL) are to stimulate worldwide development of collaborative font projects, to support the font creation efforts of academic and linguistic communities, and to provide a free and open framework in which fonts may be shared and improved in partnership with others.
+
+The OFL allows the licensed fonts to be used, studied, modified and redistributed freely as long as they are not sold by themselves. The fonts, including any derivative works, can be bundled, embedded, redistributed and/or sold with any software provided that any reserved names are not used by derivative works. The fonts and derivatives, however, cannot be released under any other type of license. The requirement for fonts to remain under this license does not apply to any document created using the fonts or their derivatives.
+
+DEFINITIONS
+“Font Software” refers to the set of files released by the Copyright Holder(s) under this license and clearly marked as such. This may include source files, build scripts and documentation.
+
+“Reserved Font Name” refers to any names specified as such after the copyright statement(s).
+
+“Original Version” refers to the collection of Font Software components as distributed by the Copyright Holder(s).
+
+“Modified Version” refers to any derivative made by adding to, deleting, or substituting—in part or in whole—any of the components of the Original Version, by changing formats or by porting the Font Software to a new environment.
+
+“Author” refers to any designer, engineer, programmer, technical writer or other person who contributed to the Font Software.
+
+PERMISSION & CONDITIONS
+Permission is hereby granted, free of charge, to any person obtaining a copy of the Font Software, to use, study, copy, merge, embed, modify, redistribute, and sell modified and unmodified copies of the Font Software, subject to the following conditions:
+
+1) Neither the Font Software nor any of its individual components, in Original or Modified Versions, may be sold by itself.
+
+2) Original or Modified Versions of the Font Software may be bundled, redistributed and/or sold with any software, provided that each copy contains the above copyright notice and this license. These can be included either as stand-alone text files, human-readable headers or in the appropriate machine-readable metadata fields within text or binary files as long as those fields can be easily viewed by the user.
+
+3) No Modified Version of the Font Software may use the Reserved Font Name(s) unless explicit written permission is granted by the corresponding Copyright Holder. This restriction only applies to the primary font name as presented to the users.
+
+4) The name(s) of the Copyright Holder(s) or the Author(s) of the Font Software shall not be used to promote, endorse or advertise any Modified Version, except to acknowledge the contribution(s) of the Copyright Holder(s) and the Author(s) or with their explicit written permission.
+
+5) The Font Software, modified or unmodified, in part or in whole, must be distributed entirely under this license, and must not be distributed under any other license. The requirement for fonts to remain under this license does not apply to any document created using the Font Software.
+
+TERMINATION
+This license becomes null and void if any of the above conditions are not met.
+
+DISCLAIMER
+THE FONT SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT OF COPYRIGHT, PATENT, TRADEMARK, OR OTHER RIGHT. IN NO EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, INCLUDING ANY GENERAL, SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL DAMAGES, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM OTHER DEALINGS IN THE FONT SOFTWARE. */

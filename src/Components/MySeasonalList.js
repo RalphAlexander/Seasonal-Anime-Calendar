@@ -22,58 +22,59 @@ export default function MySeasonalList({
             </h1>
             <div className='table-container'>
                 <table>
-                    <thead> 
+                    <thead>
                         <tr>
                             <th>
-                                <BiTrash 
-                                className='icon-wrapper trash-icon'
-                                onClick={handleOpenDeleteWindow}/>
+                                <BiTrash
+                                    className='icon-wrapper trash-icon'
+                                    onClick={handleOpenDeleteWindow} />
                             </th>
                             <th> Image </th>
-                            <th onClick={handleTitleSort}> 
+                            <th onClick={handleTitleSort}>
                                 <div className='icon-wrapper'>
                                     Name
                                     {titleIsSortedInAscending === '' && <BiSortAlt2
-                                    onClick={handleTitleSort}
-                                    className='sort-icon' />}
+                                        onClick={handleTitleSort}
+                                        className='sort-icon' />}
                                     {titleIsSortedInAscending === true && <BiSortAZ
-                                    onClick={handleTitleSort}
-                                    className='sort-icon' />}
+                                        onClick={handleTitleSort}
+                                        className='sort-icon' />}
                                     {titleIsSortedInAscending === false && <BiSortZA
-                                    onClick={handleTitleSort}
-                                    className='sort-icon' />}
+                                        onClick={handleTitleSort}
+                                        className='sort-icon' />}
                                 </div>
                             </th>
                             <th> Your Progress </th>
                             <th onClick={handleDateSortMondaytoSunday}>
-                            <div className='icon-wrapper'>
+                                <div className='icon-wrapper'>
                                     broadcast
                                     {dateIsSortedInAscending === '' && <BiSortAlt2
-                                    onClick={handleTitleSort}
-                                    className='sort-icon' />}
+                                        onClick={handleTitleSort}
+                                        className='sort-icon' />}
                                     {dateIsSortedInAscending === true && <BiSortDown
-                                    onClick={handleTitleSort}
-                                    className='sort-icon' />}
+                                        onClick={handleTitleSort}
+                                        className='sort-icon' />}
                                     {dateIsSortedInAscending === false && <BiSortUp
-                                    onClick={handleTitleSort}
-                                    className='sort-icon' />}
+                                        onClick={handleTitleSort}
+                                        className='sort-icon' />}
                                 </div>
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                    {userList.length > 0 && userList.map((seasonalAnime) =>{
-                        return(
-                            <MySeasonalEntry 
-                                anime={seasonalAnime}
-                                key={seasonalAnime.mal_id}
-                                handleCheckBox = {handleCheckBox}
-                                handleIncreaseEpisodeCounter = {handleIncreaseEpisodeCounter}
-                                handleDecreaseEpisodeCounter = {handleDecreaseEpisodeCounter}
-                                getAnimeAirDate = {getAnimeAirDate}
-                                getAnimeBroadcastTime = {getAnimeBroadcastTime}
-                            />
-                                )})}
+                        {userList.length > 0 && userList.map((seasonalAnime) => {
+                            return (
+                                <MySeasonalEntry
+                                    anime={seasonalAnime}
+                                    key={seasonalAnime.mal_id}
+                                    handleCheckBox={handleCheckBox}
+                                    handleIncreaseEpisodeCounter={handleIncreaseEpisodeCounter}
+                                    handleDecreaseEpisodeCounter={handleDecreaseEpisodeCounter}
+                                    getAnimeAirDate={getAnimeAirDate}
+                                    getAnimeBroadcastTime={getAnimeBroadcastTime}
+                                />
+                            )
+                        })}
                     </tbody>
                 </table>
             </div>

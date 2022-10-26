@@ -11,7 +11,7 @@ export default function DeleteWindowComponent({
             <div className='exit-button' onClick={handleClickDelete}>
                 <BiExit className='exit-icon' />
             </div>
-            <div className='delete-window'>
+            <div className='popup-window'>
                 <div className='delete-header'>
                     Do you want to remove?
                 </div>

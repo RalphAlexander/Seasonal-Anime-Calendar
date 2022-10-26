@@ -1,27 +1,74 @@
+.seasonal-calendar-grid-container {
+    display: grid;
+    justify-items: center;
+}
 
 .seasonal-calendar-grid {
-    margin: 1rem;
-    display:grid;
-    grid-template-columns: repeat(3, 1fr);
+    width: 1100px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     grid-gap: 1.5em;
-    
 }
+
 .seasonal-calendar-card {
-    border: solid 1px;  
+    height: 200px;
+    border: #343434 solid 3px;
+    background-color: #232323;
+    display: grid;
+    grid-template-columns: 25% auto;
+    grid-template-rows: 60% 20% 20%;
+    grid-template-areas:
+        'img title'
+        'img airtime'
+        'img timeleft';
+}
+
+.seasonal-calendar-card:hover {
+    filter: brightness(1.2);
+    filter: contrast(0.8);
+}
+
+.seasonal-calendar-anime-title-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-area: title;
 }
 
 .seasonal-calendar-anime-title {
     text-align: center;
+    margin: 10px 20px;
+    font-size: 20px;
 }
+
 .seasonal-calendar-anime-img-wrapper {
+    overflow: hidden;
     display: flex;
     justify-content: center;
+    background-color: #464646;
+    grid-area: img;
 }
 
 .seasonal-calendar-anime-img {
-    max-width: -webkit-fill-available;
-    max-height: 12rem;
+    height: 100%;
+    grid-area: img;
 }
-.seasonal-calendar-anime-text {
+
+.seasonal-calendar-anime-air-time {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    grid-area: airtime;
+}
+
+.seasonal-calendar-anime-time-left-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    grid-area: timeleft;
+}
+
+.seasonal-calendar-anime-time-left {
     text-align: center;
+    padding: 0 20px;
 }

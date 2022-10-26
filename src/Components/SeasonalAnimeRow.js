@@ -24,7 +24,7 @@ export default function SeasonalRow({
                 <div className='anime-card-row-button-wrapper'>
                     <button
                         className='anime-card-button'
-                        onClick={() => {handleAddAnimeToList(anime)}}>
+                        onClick={() => { handleAddAnimeToList(anime) }}>
                         Add to List
                     </button>
                 </div>
