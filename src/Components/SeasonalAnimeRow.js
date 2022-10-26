@@ -15,8 +15,6 @@ export default function SeasonalRow({
                     <img
                         src={anime.images.jpg.image_url}
                         className='anime-card-row-img' />
-                    <div className='anime-card-row-background' />
-
                 </div>
                 <div className='anime-card-row-title'>
                     {anime.title}

@@ -408,13 +408,6 @@ button {
   justify-content: center;
 }
 
-
-.anime-card-row-background {
-  height: 100%;
-  width: 100%;
-  background-color: #343434;
-}
-
 .separator {
   margin: 2rem 0;
   -webkit-user-select: none;
