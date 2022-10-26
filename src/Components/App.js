@@ -1,5 +1,4 @@
-import GetRandomAnime from './GetRandomAnime';
-import GetTopAnime from './GetTopAnime';
+
 import GetSeasonalList from './GetSeasonalList';
 
 
@@ -7,8 +6,6 @@ import GetSeasonalList from './GetSeasonalList';
 function App() {
   return (
     <div>
-      {/* <GetRandomAnime /> */}
-      {/* <GetTopAnime /> */}
       <GetSeasonalList />
     </div>
   );
