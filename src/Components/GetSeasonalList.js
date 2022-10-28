@@ -1,4 +1,5 @@
 import Axios from 'axios'
+// TODO
 import { AiFillSetting } from 'react-icons/ai'
 import { BiTimeFive } from 'react-icons/bi'
 import { DateTime } from 'luxon'
@@ -14,6 +15,8 @@ import SeasonalAnimeViewType from './SeasonalAnimeViewType'
 import MySeasonalCalendar from './MySeasonalCalendar'
 import DeleteWindowComponent from './DeleteWindowComponent'
 import FilterWindowComponent from './FilterWindowComponent'
+import Loading from './Loading'
+import Navbar from './Navbar'
 
 const USER_LIST_KEY = 'userList'
 const VIEW_KEY = 'view'
@@ -35,6 +38,7 @@ export default function GetSeasonalList() {
 	const [settingsView, setSettingsView] = useState(false)
 	const [deleteView, setDeleteView] = useState(false)
 	const [filterView, setFilterView] = useState(false)
+	const [isLoading, setIsLoading] = useState(true)
 	const [filterTime, setFilterTime] = useState(24)
 	const [titleIsSortedInAscending, setTitleIsSortedInAscending] = useState('')
 	const [dateIsSortedInAscending, setDateIsSortedInAscending] = useState('')
@@ -109,6 +113,7 @@ export default function GetSeasonalList() {
 						})
 					}
 					getData(pageNumber + 1, res.data.pagination.has_next_page)
+					setIsLoading(false)
 				})
 		}
 	}
@@ -404,75 +409,69 @@ export default function GetSeasonalList() {
 		setDeleteView(!deleteView)
 	}
 
-	if (seasonalList !== undefined) {
-		return (
-			<>
-				{settingsView &&
-					<SettingsComponent
-						handleClickSettings={handleClickSettings}
-						handleChangeSettings={handleChangeSettings}
-						displayType={displayType} />}
-				{deleteView &&
-					<DeleteWindowComponent
-						handleClickDelete={handleClickDelete}
-						handleRemoveSelected={handleRemoveSelected}
-						handleRemoveAll={handleRemoveAll} />}
-				{filterView &&
-					<FilterWindowComponent
-						handleFilterSettings={handleFilterSettings}
-						handleDisplayWithinTime={handleDisplayWithinTime}
+
+	return (
+		<>
+
+			{settingsView &&
+				<SettingsComponent
+					handleClickSettings={handleClickSettings}
+					handleChangeSettings={handleChangeSettings}
+					displayType={displayType} />}
+			{deleteView &&
+				<DeleteWindowComponent
+					handleClickDelete={handleClickDelete}
+					handleRemoveSelected={handleRemoveSelected}
+					handleRemoveAll={handleRemoveAll} />}
+			{filterView &&
+				<FilterWindowComponent
+					handleFilterSettings={handleFilterSettings}
+					handleDisplayWithinTime={handleDisplayWithinTime}
+				/>}
+
+			<div className={settingsView || deleteView || filterView ? 'z-index' : ''}>
+				<Navbar
+					handleClickSettings={handleClickSettings}
+					handleFilterSettings={handleFilterSettings}
+					handleSeasonalAnimeViewClick={handleSeasonalAnimeViewClick}
+					handleMyListViewClick={handleMyListViewClick}
+					handleSeasonalCalendarClick={handleSeasonalCalendarClick}
+					view={view} />
+
+				{view === 'seasonal anime view' &&
+					<SeasonalAnimeViewType
+						handleAddAnimeToList={handleAddAnimeToList}
+						seasonalList={seasonalList}
+						displayType={displayType}
 					/>}
-				<div className={settingsView || deleteView || filterView ? 'z-index' : ''}>
-					<nav className='nav-header'>
-						<div className='navabar-icon-wrapper'>
-							<AiFillSetting
-								onClick={handleClickSettings}
-								className='navbar-icon' />
-						</div>
-						<div className={view === 'seasonal anime view' ? 'nav-elements-focused' : 'nav-elements'} onClick={handleSeasonalAnimeViewClick}> Seasonal Anime </div>
-						<div className='separator'> | </div>
-						<div className={view === 'my seasonal list view' ? 'nav-elements-focused' : 'nav-elements'} onClick={handleMyListViewClick}> My Seasonal List </div>
-						<div className='separator'> | </div>
-						<div className={view === 'my seasonal calendar view' ? 'nav-elements-focused' : 'nav-elements'} onClick={handleSeasonalCalendarClick}> My Seasonal Calendar </div>
-						<div className='navabar-icon-wrapper'>
-							<BiTimeFive
-								onClick={handleFilterSettings}
-								className='navbar-icon' />
-						</div>
-					</nav>
-					<div>
-					</div>
-					{view === 'seasonal anime view' &&
-						<SeasonalAnimeViewType
-							handleAddAnimeToList={handleAddAnimeToList}
-							seasonalList={seasonalList}
-							displayType={displayType}
-						/>}
-					{view === 'my seasonal list view' &&
-						<MySeasonalList
-							handleTitleSort={handleTitleSort}
-							handleCheckBox={handleCheckBox}
-							handleDateSortMondaytoSunday={handleDateSortMondaytoSunday}
-							handleOpenDeleteWindow={handleOpenDeleteWindow}
-							handleIncreaseEpisodeCounter={handleIncreaseEpisodeCounter}
-							handleDecreaseEpisodeCounter={handleDecreaseEpisodeCounter}
-							getAnimeAirDate={getAnimeAirDate}
-							getAnimeBroadcastTime={getAnimeBroadcastTime}
-							titleIsSortedInAscending={titleIsSortedInAscending}
-							dateIsSortedInAscending={dateIsSortedInAscending}
-							userList={userList}
-						/>}
-					{view === 'my seasonal calendar view' &&
-						<MySeasonalCalendar
-							getDaysAndHoursUntilNextEpisode={getDaysAndHoursUntilNextEpisode}
-							getAnimeBroadcastTime={getAnimeBroadcastTime}
-							filterTime={filterTime}
-							userList={userList}
-						/>}
-				</div>
-			</>
-		)
-	}
+
+				{isLoading && <Loading />}
+
+				{view === 'my seasonal list view' &&
+					<MySeasonalList
+						handleTitleSort={handleTitleSort}
+						handleCheckBox={handleCheckBox}
+						handleDateSortMondaytoSunday={handleDateSortMondaytoSunday}
+						handleOpenDeleteWindow={handleOpenDeleteWindow}
+						handleIncreaseEpisodeCounter={handleIncreaseEpisodeCounter}
+						handleDecreaseEpisodeCounter={handleDecreaseEpisodeCounter}
+						getAnimeAirDate={getAnimeAirDate}
+						getAnimeBroadcastTime={getAnimeBroadcastTime}
+						titleIsSortedInAscending={titleIsSortedInAscending}
+						dateIsSortedInAscending={dateIsSortedInAscending}
+						userList={userList}
+					/>}
+				{view === 'my seasonal calendar view' &&
+					<MySeasonalCalendar
+						getDaysAndHoursUntilNextEpisode={getDaysAndHoursUntilNextEpisode}
+						getAnimeBroadcastTime={getAnimeBroadcastTime}
+						filterTime={filterTime}
+						userList={userList}
+					/>}
+			</div>
+		</>
+	)
+
 }
 
 // Copyright 2019 JS Foundation and other contributors

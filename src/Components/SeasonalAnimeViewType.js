@@ -6,19 +6,18 @@ import SeasonalAnimeRow from "./SeasonalAnimeRow"
 // @param seasonalList - array of objects anime obtained from fetch request
 // @param displayType - the name of layout / display in a string
 //
-// changes the view / layout of the Seasonal Anime
+// Changes the view / layout of the Seasonal Anime
 export default function SeasonalAnimeViewType({
     handleAddAnimeToList,
     seasonalList,
     displayType
 
 }) {
-    return (
-        <>
-            <div className='seasonal-view-body'>
-                <h1>
-                    Seasonal Anime
-                </h1>
+
+    // Renders a display for the seasonal animes
+    function SeasonalAnimeDisplay() {
+        if (seasonalList !== undefined) {
+            return (
                 <div className='card-container'>
                     {displayType === 'MALStyle' &&
                         seasonalList.map((seasonalAnime) => {
@@ -41,7 +40,23 @@ export default function SeasonalAnimeViewType({
                             )
                         })}
                 </div>
+            )
+        }
+    }
+
+
+    return (
+        <>
+
+            <div className='seasonal-view-body'>
+                <h1>
+                    Seasonal Anime
+                </h1>
+                <SeasonalAnimeDisplay />
             </div>
+
         </>
     )
+
 }
+
