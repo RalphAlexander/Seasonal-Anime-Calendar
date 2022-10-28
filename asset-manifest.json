@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/Seasonal-Anime-Calendar/static/css/main.faae4d98.css",
-    "main.js": "/Seasonal-Anime-Calendar/static/js/main.a2c48d24.js",
+    "main.css": "/Seasonal-Anime-Calendar/static/css/main.48f91f6a.css",
+    "main.js": "/Seasonal-Anime-Calendar/static/js/main.dea44c10.js",
     "index.html": "/Seasonal-Anime-Calendar/index.html",
-    "main.faae4d98.css.map": "/Seasonal-Anime-Calendar/static/css/main.faae4d98.css.map",
-    "main.a2c48d24.js.map": "/Seasonal-Anime-Calendar/static/js/main.a2c48d24.js.map"
+    "main.48f91f6a.css.map": "/Seasonal-Anime-Calendar/static/css/main.48f91f6a.css.map",
+    "main.dea44c10.js.map": "/Seasonal-Anime-Calendar/static/js/main.dea44c10.js.map"
   },
   "entrypoints": [
-    "static/css/main.faae4d98.css",
-    "static/js/main.a2c48d24.js"
+    "static/css/main.48f91f6a.css",
+    "static/js/main.dea44c10.js"
   ]
 }
