@@ -252,7 +252,7 @@ button {
 
 .anime-card-title-wrapper {
   grid-area: title;
-  height: -webkit-fill-available;
+  height: 100%;
   border-radius: 8px 8px 0 0;
   background-color: #232323;
   display: flex;
@@ -316,7 +316,7 @@ button {
 .anime-card-synopsis-wrapper {
   background-color: #232323;
   grid-area: synopsis;
-  overflow-y: clip;
+  overflow-y: hidden;
   overflow-x: auto;
   height: 100%;
   width: 100%;
