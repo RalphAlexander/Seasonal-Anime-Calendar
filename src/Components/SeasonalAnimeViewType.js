@@ -16,7 +16,7 @@ export default function SeasonalAnimeViewType({
 
     // Renders a display for the seasonal animes
     function SeasonalAnimeDisplay() {
-        if (seasonalList !== undefined) {
+        if (seasonalList) {
             return (
                 <div className='card-container'>
                     {displayType === 'MALStyle' &&

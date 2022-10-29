@@ -1,5 +1,5 @@
 import { AiFillSetting } from 'react-icons/ai'
-import { BiTimeFive } from 'react-icons/bi'
+import { BiTimeFive, BiSortAlt2 } from 'react-icons/bi'
 
 export default function Navbar({
     handleClickSettings,
@@ -7,6 +7,7 @@ export default function Navbar({
     handleSeasonalAnimeViewClick,
     handleMyListViewClick,
     handleSeasonalCalendarClick,
+    handleSortWindow,
     view
 }) {
     return (
@@ -17,6 +18,11 @@ export default function Navbar({
                     className='navbar-icon' />
             </div>
             <div className={view === 'seasonal anime view' ? 'nav-elements-focused' : 'nav-elements'} onClick={handleSeasonalAnimeViewClick}> Seasonal Anime </div>
+            <div className='navabar-icon-wrapper'>
+                <BiSortAlt2
+                    onClick={handleSortWindow}
+                    className='navbar-icon' />
+            </div>
             <div className='separator'> | </div>
             <div className={view === 'my seasonal list view' ? 'nav-elements-focused' : 'nav-elements'} onClick={handleMyListViewClick}> My Seasonal List </div>
             <div className='separator'> | </div>

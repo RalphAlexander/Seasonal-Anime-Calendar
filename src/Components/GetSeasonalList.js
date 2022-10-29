@@ -1,7 +1,4 @@
 import Axios from 'axios'
-// TODO
-import { AiFillSetting } from 'react-icons/ai'
-import { BiTimeFive } from 'react-icons/bi'
 import { DateTime } from 'luxon'
 import { useEffect, useState } from 'react'
 
@@ -15,6 +12,7 @@ import SeasonalAnimeViewType from './SeasonalAnimeViewType'
 import MySeasonalCalendar from './MySeasonalCalendar'
 import DeleteWindowComponent from './DeleteWindowComponent'
 import FilterWindowComponent from './FilterWindowComponent'
+import SortWindowComponent from './SortWindowComponent'
 import Loading from './Loading'
 import Navbar from './Navbar'
 
@@ -31,11 +29,12 @@ const timezone = DateTime.local().zoneName
 export default function GetSeasonalList() {
 
 	// React hooks
-	const [seasonalList, setSeasonalList] = useState()
+	const [seasonalList, setSeasonalList] = useState([])
 	const [userList, setUserList] = useState([])
 	const [view, setView] = useState('seasonal anime view')
 	const [displayType, setDisplayType] = useState('RowDisplay')
 	const [settingsView, setSettingsView] = useState(false)
+	const [sortView, setSortView] = useState(false)
 	const [deleteView, setDeleteView] = useState(false)
 	const [filterView, setFilterView] = useState(false)
 	const [isLoading, setIsLoading] = useState(true)
@@ -46,7 +45,10 @@ export default function GetSeasonalList() {
 
 	// Retrieve data from localstorage
 	useEffect(() => {
+		
 		getData(1, true)
+		
+
 		const localStorageUserList = JSON.parse(localStorage.getItem(USER_LIST_KEY))
 		if (localStorageUserList) setUserList(localStorageUserList)
 
@@ -124,7 +126,7 @@ export default function GetSeasonalList() {
 	// boolean state titleIsSortedInAscending and dateIsSortedInAscending
 	const handleAddAnimeToList = (anime) => {
 		setUserList((current) => {
-			if (userList === undefined) return [anime]
+			if (!userList) return [anime]
 			else if (userList.find(element => element.mal_id === anime.mal_id) === undefined) return [...current, anime]
 			else return [...current]
 		})
@@ -399,6 +401,11 @@ export default function GetSeasonalList() {
 		setSettingsView(!settingsView)
 	}
 
+	// Sets the state sortView to its opposite boolean value
+	const handleSortWindow = () => {
+		setSortView(!sortView)
+	}
+
 	// Sets the state filterView to its opposite boolean value
 	const handleFilterSettings = () => {
 		setFilterView(!filterView)
@@ -409,10 +416,64 @@ export default function GetSeasonalList() {
 		setDeleteView(!deleteView)
 	}
 
+	// Sorts the objects in the SeasonalList by their score property
+	const handleSortByScore = () => {
+		var sortedSeasonalList = seasonalList.sort((a, b) => {
+			return ((a.score < b.score) ? 1 : -1)
+		})
+
+		setSeasonalList(
+			sortedSeasonalList.map(current => {
+				return current
+			})
+		)
+	}
+
+	// Sorts the objects in the SeasonalList by their popularity property
+	const handleSortByPopularity = () => {
+
+		var sortedSeasonalList = seasonalList.sort((a, b) => {
+			return ((a.popularity > b.popularity) ? 1 : -1)
+		})
+
+		setSeasonalList(
+			sortedSeasonalList.map(current => {
+				return current
+			})
+		)
+	}
+
+	// Sorts the objects in the SeasonalList in order of their air date
+	const handleSortByAirDate = () => {
+		const janFirst = DateTime.fromSQL('2022-01-01')
+
+		var sortedSeasonalList = seasonalList.sort((a, b) => {
+			console.log(getAnimeAirDate(a).diff(janFirst))
+			if (getAnimeAirDate(a).diff(janFirst).values.milliseconds
+				< getAnimeAirDate(b).diff(janFirst).values.milliseconds) {
+				return -1
+			} else if (getAnimeAirDate(a).diff(janFirst).values.milliseconds
+				< getAnimeAirDate(b).diff(janFirst).values.milliseconds) {
+				return 1
+			}
+		})
+
+		setSeasonalList(
+			sortedSeasonalList.map(current => {
+				return current
+			})
+		)
+	}
 
 	return (
 		<>
-
+			{sortView &&
+				<SortWindowComponent
+					handleSortWindow={handleSortWindow}
+					handleSortByScore={handleSortByScore}
+					handleSortByPopularity={handleSortByPopularity}
+					handleSortByAirDate={handleSortByAirDate}
+				/>}
 			{settingsView &&
 				<SettingsComponent
 					handleClickSettings={handleClickSettings}
@@ -429,13 +490,14 @@ export default function GetSeasonalList() {
 					handleDisplayWithinTime={handleDisplayWithinTime}
 				/>}
 
-			<div className={settingsView || deleteView || filterView ? 'z-index' : ''}>
+			<div className={settingsView || deleteView || filterView || sortView ? 'z-index' : ''}>
 				<Navbar
 					handleClickSettings={handleClickSettings}
 					handleFilterSettings={handleFilterSettings}
 					handleSeasonalAnimeViewClick={handleSeasonalAnimeViewClick}
 					handleMyListViewClick={handleMyListViewClick}
 					handleSeasonalCalendarClick={handleSeasonalCalendarClick}
+					handleSortWindow={handleSortWindow}
 					view={view} />
 
 				{view === 'seasonal anime view' &&

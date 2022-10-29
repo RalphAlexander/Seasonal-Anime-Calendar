@@ -1,3 +1,5 @@
+import { AiOutlineStar } from 'react-icons/ai'
+
 // @param anime - objects to be displayed / rendered
 // @param handleAddAnimeToList - function that adds anime to the user's list, does
 // not add duplicates
@@ -15,6 +17,11 @@ export default function SeasonalAnimeMal({
                         {anime.title}
                     </div>
                 </div>
+
+                <div className='anime-card-rating-container'>
+                    {anime.score ? anime.score : 'NA'}
+                    <AiOutlineStar />
+                </div>
                 <div className='anime-card-button-wrapper'>
                     <button
                         className='anime-card-button'
@@ -22,6 +29,7 @@ export default function SeasonalAnimeMal({
                         add to list
                     </button>
                 </div>
+
                 <div className='anime-card-img-wrapper'>
                     <img
                         src={anime.images.jpg.image_url}
@@ -29,7 +37,7 @@ export default function SeasonalAnimeMal({
                 </div>
                 <div className='anime-card-synopsis-wrapper'>
                     <div className="anime-card-synopsis">
-                        {anime.synopsis}
+                        {anime.synopsis ? anime.synopsis : 'NA'}
                     </div>
                 </div>
             </div>

@@ -149,3 +149,5 @@ thead {
 .bottom-margin {
   margin-bottom: 100px
 }
+
+/* TODO: Size of the table row is too big if there is only one element */
