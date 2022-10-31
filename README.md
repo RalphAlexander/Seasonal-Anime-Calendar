@@ -7,6 +7,8 @@ Check out the Seasonal Anime Tracker [here](https://fishtomato.github.io/Seasona
 - **View Seasonal Anime:** View the current Anime season with different viewing options.
 - **User Seasonal Anime List:** Displays the user's anime list with the broadcast time and progress. The options to sort by broadcast time and by title is available
 - **View Upcoming Seasonal Anime:** Displays the animes in the user's list if they are airing within a certain amount of time. This amount can be adjusted from 1 day to 5 days, with 1 day increments.
+- **User List Stored:** User's seasonal list is stored within local storage.
+- **Sorting:** The seasonal list as well as user seasonal list can be sorted.
 
 # Credits:
 This Web App uses [JikanAPI](https://jikan.moe/), an unofficial API of MyAnimeList. 
