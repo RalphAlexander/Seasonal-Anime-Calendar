@@ -1,7 +1,7 @@
 # Seasonal-Anime-Calendar
 A Web App that tracks currently airing Animes. Users can make and edit their owns lists as well as display them in order of time, date and filter all Animes that aren't airing in a certain amount of time.
 
-Check out the Seasonal Anime Tracker [here](https://fishtomato.github.io/Seasonal-Anime-Calendar/).
+Check out the Seasonal Anime Tracker [here](https://ralphalexander.github.io/Seasonal-Anime-Calendar/).
 
 # Features: 
 - **View Seasonal Anime:** View the current Anime season with different viewing options.
