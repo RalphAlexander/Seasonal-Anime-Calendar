@@ -39,15 +39,16 @@ export default function GetSeasonalList() {
 	const [filterView, setFilterView] = useState(false)
 	const [isLoading, setIsLoading] = useState(true)
 	const [filterTime, setFilterTime] = useState(24)
+	const [fetchError, setFetchError] = useState(null)
 	const [titleIsSortedInAscending, setTitleIsSortedInAscending] = useState('')
 	const [dateIsSortedInAscending, setDateIsSortedInAscending] = useState('')
 
 
 	// Retrieve data from localstorage
 	useEffect(() => {
-		
+
 		getData(1, true)
-		
+
 
 		const localStorageUserList = JSON.parse(localStorage.getItem(USER_LIST_KEY))
 		if (localStorageUserList) setUserList(localStorageUserList)
@@ -102,23 +103,46 @@ export default function GetSeasonalList() {
 	// @param hasPage - boolean value of if the current page number exists
 	//
 	// fetches the data which is stored in the state seasonalList
-	const getData = async (pageNumber, hasPage) => {
 
-		if (hasPage) {
-			return await Axios.get(`https://api.jikan.moe/v4/seasons/now?page=${pageNumber}`)
-				.then((res) => {
-					if (pageNumber === 1) {
-						setSeasonalList(res.data.data)
-					} else {
-						setSeasonalList((current) => {
-							return [...current, ...res.data.data]
-						})
-					}
-					getData(pageNumber + 1, res.data.pagination.has_next_page)
-					setIsLoading(false)
-				})
+	const getData = async () => {
+		setIsLoading(true)
+		setFetchError(null)
+
+		try {
+			let pageNumber = 1
+			let hasNextPage = true
+			let allAnime = []
+
+			while (hasNextPage) {
+				const res = await Axios.get(
+					`https://api.tenrai.org/v1/seasons/now?page=${pageNumber}`,
+					{ timeout: 1000 }
+				)
+
+				allAnime = [...allAnime, ...res.data.data]
+
+				hasNextPage = res.data.pagination.has_next_page
+				pageNumber++
+			}
+
+			setSeasonalList(allAnime)
+
+		} catch (error) {
+			console.error('Failed to fetch seasonal anime:', error)
+
+			if (error.code === 'ECONNABORTED') {
+				setFetchError('Request timed out. Please try again.')
+			} else if (error.response?.status === 429) {
+				setFetchError('API rate limit reached. Please try again later.')
+			} else {
+				setFetchError('Failed to retrieve seasonal anime.')
+			}
+
+		} finally {
+			setIsLoading(false)
 		}
 	}
+
 
 	// @param anime - objects to be modified
 	//
@@ -500,14 +524,28 @@ export default function GetSeasonalList() {
 					handleSortWindow={handleSortWindow}
 					view={view} />
 
-				{view === 'seasonal anime view' &&
-					<SeasonalAnimeViewType
-						handleAddAnimeToList={handleAddAnimeToList}
-						seasonalList={seasonalList}
-						displayType={displayType}
-					/>}
-
-				{isLoading && <Loading />}
+				{view === 'seasonal anime view' && (
+					<>
+						{isLoading ? (
+							<Loading />
+						) : fetchError ? (
+							<div className="fetch-error">
+								<p>{fetchError}</p>
+								<button
+									className="remove-button"
+									onClick={getData}>
+									Retry
+								</button>
+							</div>
+						) : (
+							<SeasonalAnimeViewType
+								handleAddAnimeToList={handleAddAnimeToList}
+								seasonalList={seasonalList}
+								displayType={displayType}
+							/>
+						)}
+					</>
+				)}
 
 				{view === 'my seasonal list view' &&
 					<MySeasonalList
@@ -601,33 +639,3 @@ export default function GetSeasonalList() {
 // LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-// MIT License
-
-// Copyright (c) 2019 Jikan API
-
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
-
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-// SOFTWARE.
-
-// # Copyright (c) 2014-present Matt Zabriskie & Collaborators
-
-// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

@@ -224,6 +224,21 @@ button {
   -webkit-user-select: none;
 }
 
+.fetch-error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 50vh;
+    gap: 1rem;
+    text-align: center;
+}
+
+.fetch-error button {
+    padding: 0.5rem 1.5rem;
+    cursor: pointer;
+}
+
 .seasonal-view-body {
   display: grid;
   justify-items: center;

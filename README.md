@@ -11,4 +11,4 @@ Check out the Seasonal Anime Tracker [here](https://ralphalexander.github.io/Sea
 - **Sorting:** The seasonal list as well as user seasonal list can be sorted.
 
 # Credits:
-This Web App uses [JikanAPI](https://jikan.moe/), an unofficial API of MyAnimeList. 
+This Web App uses [Tenrai API](https://tenrai.org), an unofficial API of MyAnimeList. 
